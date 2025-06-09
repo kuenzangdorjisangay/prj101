@@ -137,25 +137,34 @@
     }
 
     function renderProducts(products) {
-      productsDisplay.innerHTML = '';
-      products.forEach(product => {
-        const div = document.createElement('div');
-        div.className = 'product';
+  productsDisplay.innerHTML = '';
+  products.forEach(product => {
+    const div = document.createElement('div');
+    div.className = 'product';
 
-        div.innerHTML = `
-            <img src="${product.image}" alt="${product.name}" />
-            <h3>${product.name}</h3>
-            <p><strong>Price:</strong> Nu.${product.price}</p>
-            <p>${product.description}</p>
-            <div class="actions">
-                <button class="edit-btn" onclick="editProduct('${product._id}', this)">Edit</button>
-                <button class="delete-btn" onclick="deleteProduct('${product._id}')">Delete</button>
-            </div>
-        `;
+    div.innerHTML = `
+      <div class="product-image">
+        <img src="${product.image}" alt="${product.name}" />
+      </div>
+      <div class="product-details">
+        <h3 class="product-title">${product.name}</h3>
+        <p class="product-price">Nu.${product.price}</p>
+        <p class="product-description">${product.description}</p>
+        <div class="actions">
+          <button class="edit-btn" onclick="editProduct('${product._id}', this)">
+            ✏️ Edit
+          </button>
+          <button class="delete-btn" onclick="deleteProduct('${product._id}')">
+            🗑️ Delete
+          </button>
+        </div>
+      </div>
+    `;
 
-        productsDisplay.appendChild(div);
-      });
-    }
+    productsDisplay.appendChild(div);
+  });
+}
+
 
     let editingProductId = null;
     function editProduct(productId, button) {
@@ -400,27 +409,26 @@ async function loadIncome() {
       color: #fff;
     }
     #productForm { display: none !important; }
+
     .stats .btn {
-      background: linear-gradient(90deg, #27ae60 0%, #219150 100%);
-      color: #fff;
-      font-size: 18px;
-      font-weight: 600;
-      padding: 12px 32px;
-      border: none;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(39, 174, 96, 0.12);
-      cursor: pointer;
-      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
-      margin-left: 20px;
-      letter-spacing: 0.5px;
-      outline: none;
-      display: inline-block;
-    }
-    .stats .btn:hover {
-      background: linear-gradient(90deg, #219150 0%, #27ae60 100%);
-      transform: translateY(-2px) scale(1.04);
-      box-shadow: 0 4px 16px rgba(39, 174, 96, 0.18);
-    }
+  background: linear-gradient(90deg, #27ae60 0%, #219150 100%);
+  color: #fff;
+  font-size: 15px;            /* Smaller font */
+  font-weight: 500;
+  padding: 10px 20px;         /* Less padding */
+  border: none;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(39, 174, 96, 0.12);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+  margin-left: auto;
+}
+.stats .btn:hover {
+  background: linear-gradient(90deg, #219150 0%, #27ae60 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(39, 174, 96, 0.18);
+}
+
     .logo img {
       width: 90px;
       height: auto;
