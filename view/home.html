@@ -831,7 +831,6 @@
       })
         .then(res => res.json())
         .then(data => {
-          alert(data.message || 'Logged out successfully');
           window.location.href = 'login.html';
         })
         .catch(err => {
