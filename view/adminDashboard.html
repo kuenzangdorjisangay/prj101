@@ -72,7 +72,20 @@
     </main>
   </div>
 
-
+  <div id="editModal" class="modal" style="display:none;">
+      <div class="modal-content">
+        <span class="close" onclick="closeEditModal()">&times;</span>
+        <h2>Edit Product</h2>
+        <input type="text" id="editName" placeholder="Product Name" />
+        <input type="number" id="editPrice" placeholder="Product Price" />
+        <textarea id="editDescription" placeholder="Product Description"></textarea>
+        <input type="text" id="editImage" placeholder="Product Image URL" />
+        <div class="actions">
+          <button class="btn save-btn" onclick="saveEditModal()">Save</button>
+          <button class="btn delete-btn" onclick="closeEditModal()">Cancel</button>
+        </div>
+      </div>
+    </div>
 
   <script>
     const API_URL = "http://localhost:3000/api/products";
@@ -161,47 +174,46 @@
       }
     }
 
+    let editingProductId = null;
     function editProduct(productId, button) {
       const productDiv = button.closest('.product');
       const name = productDiv.querySelector('h3').textContent;
       const price = productDiv.querySelector('p').textContent.match(/\d+(\.\d+)?/)[0];
       const desc = productDiv.querySelectorAll('p')[1].textContent;
       const img = productDiv.querySelector('img').src;
-
-      productDiv.innerHTML = `
-        <input type="text" class="edit-name" value="${name}" />
-        <input type="number" class="edit-price" value="${price}" />
-        <textarea class="edit-description">${desc}</textarea>
-        <input type="text" class="edit-image" value="${img}" />
-        <div class="actions">
-            <button class="btn save-btn" onclick="saveEdit('${productId}', this)">Save</button>
-            <button class="btn delete-btn" onclick="loadProducts()">Cancel</button>
-        </div>
-    `;
+      editingProductId = productId;
+      document.getElementById('editName').value = name;
+      document.getElementById('editPrice').value = price;
+      document.getElementById('editDescription').value = desc;
+      document.getElementById('editImage').value = img;
+      document.getElementById('editModal').style.display = 'block';
+      document.body.style.overflow = 'hidden';
     }
-
-    async function saveEdit(productId, button) {
-      const productDiv = button.closest('.product');
+    function closeEditModal() {
+      document.getElementById('editModal').style.display = 'none';
+      document.body.style.overflow = '';
+      editingProductId = null;
+    }
+    async function saveEditModal() {
       const updatedProduct = {
-        name: productDiv.querySelector('.edit-name').value.trim(),
-        price: parseFloat(productDiv.querySelector('.edit-price').value),
-        description: productDiv.querySelector('.edit-description').value.trim(),
-        image: productDiv.querySelector('.edit-image').value.trim()
+        name: document.getElementById('editName').value.trim(),
+        price: parseFloat(document.getElementById('editPrice').value),
+        description: document.getElementById('editDescription').value.trim(),
+        image: document.getElementById('editImage').value.trim()
       };
-
       if (!updatedProduct.name || !updatedProduct.price || !updatedProduct.image) {
         alert("Please fill in all required fields.");
         return;
       }
-
       try {
-        const res = await fetch(`${API_URL}/update/${productId}`, {
+        const res = await fetch(`${API_URL}/update/${editingProductId}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(updatedProduct)
         });
         const data = await res.json();
         if (data.success) {
+          closeEditModal();
           loadProducts();
         } else {
           alert("Failed to update product.");
@@ -280,5 +292,84 @@
 
 
   </script>
+  <style>
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: auto;
+      background: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background: #fff;
+      margin: 10vh auto;
+      padding: 30px 20px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.2);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    .modal-content .close {
+      position: absolute;
+      right: 15px;
+      top: 10px;
+      font-size: 28px;
+      cursor: pointer;
+    }
+    .modal-content input,
+    .modal-content textarea {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+    .modal-content .actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .modal-content .actions .btn {
+      padding: 6px 18px;
+      border: none;
+      border-radius: 6px;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+      height: 34px;
+      min-height: 0;
+    }
+    .modal-content .actions .save-btn {
+      background: #27ae60;
+      color: #fff;
+      margin-right: 8px;
+    }
+    .modal-content .actions .save-btn:hover {
+      background: #219150;
+      color: #fff;
+    }
+    .modal-content .actions .delete-btn {
+      background: #e0e0e0;
+      color: #333;
+    }
+    .modal-content .actions .delete-btn:hover {
+      background: #e74c3c;
+      color: #fff;
+    }
+    </style>
 
 </body>
+</html>
