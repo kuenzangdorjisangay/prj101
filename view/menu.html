@@ -661,7 +661,7 @@
                         `<img src="${product.image}" alt="${escapeHtml(product.name)}">
         <div class="menu-item-content">
             <h3 class="menu-item-title">${escapeHtml(product.name)}</h3>
-            <p class="menu-item-price">Nu.${product.price} per piece</p>
+            <p class="menu-item-price">Nu.${product.price}</p>
             <p class="menu-item-description">${escapeHtml(product.description || '')}</p>
             <button class="order-btn" onclick="addToCart('${product._id}', '${escapeHtml(product.name)}', ${product.price}, '${product.image}')">Order Now</button>
         </div>`;

@@ -310,7 +310,11 @@
 ///load income
 async function loadIncome() {
   try {
-    const res = await fetch('http://localhost:3000/api/orders/total-income');
+    const res = await fetch(`${window.location.origin}/api/orders/total-income`, {
+      method: 'GET',
+      credentials: 'include'
+    });
+
     const data = await res.json();
 
     if (data.success) {
@@ -323,6 +327,7 @@ async function loadIncome() {
     document.getElementById('totalIncome').innerHTML = `Error<span>Total Income</span>`;
   }
 }
+
     loadProducts();
     loadUserCount();
     loadIncome();
