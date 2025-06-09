@@ -36,14 +36,21 @@
         </div>
       </section>
 
-
-      <div class="form-container" id="productForm">
-        <input type="text" id="productName" placeholder="Product Name" required>
-        <input type="number" id="productPrice" placeholder="Product Price" required>
-        <textarea id="productDescription" placeholder="Product Description" required></textarea>
-        <input type="url" id="productImage" placeholder="Product Image URL" required>
-        <button class="btn" onclick="addProduct()">Submit</button>
+      <div id="addModal" class="modal" style="display:none;">
+        <div class="modal-content">
+          <span class="close" onclick="closeAddModal()">&times;</span>
+          <h2>Add Product</h2>
+          <input type="text" id="addName" placeholder="Product Name" required />
+          <input type="number" id="addPrice" placeholder="Product Price" required />
+          <textarea id="addDescription" placeholder="Product Description" required></textarea>
+          <input type="url" id="addImage" placeholder="Product Image URL" required />
+          <div class="actions">
+            <button class="btn save-btn" onclick="addProductModal()">Submit</button>
+            <button class="btn delete-btn" onclick="closeAddModal()">Cancel</button>
+          </div>
+        </div>
       </div>
+
       <div class="products-display" id="productsDisplay"></div>
 
       <section class="review">
@@ -97,8 +104,18 @@
     const productsDisplay = document.getElementById('productsDisplay');
 
     function toggleForm() {
-      const form = document.getElementById('productForm');
-      form.style.display = form.style.display === 'none' || form.style.display === '' ? 'block' : 'none';
+      document.getElementById('addModal').style.display = 'block';
+      document.body.style.overflow = 'hidden';
+      // Clear previous values
+      document.getElementById('addName').value = '';
+      document.getElementById('addPrice').value = '';
+      document.getElementById('addDescription').value = '';
+      document.getElementById('addImage').value = '';
+    }
+
+    function closeAddModal() {
+      document.getElementById('addModal').style.display = 'none';
+      document.body.style.overflow = '';
     }
 
     async function loadProducts() {
@@ -136,42 +153,6 @@
 
         productsDisplay.appendChild(div);
       });
-    }
-
-    async function addProduct() {
-      const newProduct = {
-        name: nameInput.value.trim(),
-        price: parseFloat(priceInput.value),
-        description: descInput.value.trim(),
-        image: imageInput.value.trim()
-      };
-
-      if (!newProduct.name || !newProduct.price || !newProduct.image) {
-        alert("Please fill in all required fields.");
-        return;
-      }
-
-      try {
-        const res = await fetch(`${API_URL}/add`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(newProduct)
-        });
-        const data = await res.json();
-        if (data.success) {
-          nameInput.value = '';
-          priceInput.value = '';
-          descInput.value = '';
-          imageInput.value = '';
-          toggleForm();
-          loadProducts();
-        } else {
-          alert("Failed to add product.");
-        }
-      } catch (err) {
-        alert("Server error.");
-        console.error(err);
-      }
     }
 
     let editingProductId = null;
@@ -236,6 +217,36 @@
           loadProducts();
         } else {
           alert("Failed to delete product.");
+        }
+      } catch (err) {
+        alert("Server error.");
+        console.error(err);
+      }
+    }
+
+    async function addProductModal() {
+      const newProduct = {
+        name: document.getElementById('addName').value.trim(),
+        price: parseFloat(document.getElementById('addPrice').value),
+        description: document.getElementById('addDescription').value.trim(),
+        image: document.getElementById('addImage').value.trim()
+      };
+      if (!newProduct.name || !newProduct.price || !newProduct.image) {
+        alert("Please fill in all required fields.");
+        return;
+      }
+      try {
+        const res = await fetch(`${API_URL}/add`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(newProduct)
+        });
+        const data = await res.json();
+        if (data.success) {
+          closeAddModal();
+          loadProducts();
+        } else {
+          alert("Failed to add product.");
         }
       } catch (err) {
         alert("Server error.");
@@ -369,6 +380,7 @@
       background: #e74c3c;
       color: #fff;
     }
+    #productForm { display: none !important; }
     </style>
 
 </body>
