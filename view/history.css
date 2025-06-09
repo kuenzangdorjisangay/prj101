@@ -1,3 +1,4 @@
+/* Reset & Global Styles */
 * {
   margin: 0;
   padding: 0;
@@ -6,21 +7,28 @@
 }
 
 body {
-  display: flex;
   min-height: 100vh;
+  display: flex;
   background-color: #f4f6f8;
 }
 
+/* Layout Container */
 .container {
   display: flex;
   width: 100%;
 }
 
+/* Sidebar Styles */
 .sidebar {
   width: 220px;
-  background-color: #5d82a9;
-  color: white;
-  padding: 20px 0;
+  background-color: #2e3a59;
+  color: #fff;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: sticky;
+  top: 0;
 }
 
 .sidebar .logo {
@@ -29,57 +37,89 @@ body {
 }
 
 .sidebar .logo img {
-  width: 120px;
+  width: 90px;
+  height: auto;
+  border-radius: 50%;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  object-fit: contain;
 }
 
 .sidebar nav ul {
   list-style: none;
   padding-left: 0;
+  width: 100%;
 }
 
 .sidebar nav ul li {
-  padding: 12px 20px;
-}
-
-.sidebar nav ul li.active,
-.sidebar nav ul li:hover {
-  background-color: #5d82a9;
+  width: 100%;
 }
 
 .sidebar nav ul li a {
-  color: white;
-  text-decoration: none;
   display: block;
+  padding: 14px 24px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 15px;
+  transition: background 0.3s, padding-left 0.3s;
 }
 
+.sidebar nav ul li.active a,
+.sidebar nav ul li a:hover {
+  background-color: #1d2742;
+  padding-left: 32px;
+  border-left: 4px solid #72c172;
+}
+
+/* Main Content */
 .main-content {
   flex: 1;
   padding: 40px;
   background-color: #f4f6f8;
-}
-body {
-  font-family: Arial, sans-serif;
-  margin: 20px;
-  background: #f0f2f5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
+/* Chart Canvas */
+#orderChart {
+  height: 450px !important;
+  width: 450px !important;
+  max-width: 100%;
+  max-height: 60vh;
+  display: block;
+  margin: 0 auto;
+}
 
-  h2 {
-    margin-bottom: 20px;
-  }
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  }
-  th, td {
-    padding: 15px;
-    text-align: left;
-    border-bottom: 1px solid #eee;
-  }
-  th {
-    background-color: #f5f5f5;
-    color: #444;
-  }
+/* Heading */
+.main-content h2 {
+  font-size: 24px;
+  margin-bottom: 30px;
+  color: #2e3a59;
+}
+
+/* Table Styles (for pages like Order List) */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 30px;
+}
+
+th, td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+th {
+  background-color: #f5f5f5;
+  color: #444;
+}
+
+/* Logout hover */
+.sidebar nav ul li a:hover {
+  cursor: pointer;
+}

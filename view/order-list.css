@@ -1,3 +1,4 @@
+
 * {
   margin: 0;
   padding: 0;
@@ -18,9 +19,14 @@ body {
 
 .sidebar {
   width: 220px;
-  background-color: #5d82a9;
-  color: white;
-  padding: 20px 0;
+  background-color: #2e3a59;
+  color: #fff;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: sticky;
+  top: 0;
 }
 
 .sidebar .logo {
@@ -29,16 +35,20 @@ body {
 }
 
 .sidebar .logo img {
-  width: 120px;
+  width: 100px;
+  margin-bottom: 20px;
+  border-radius: 50%;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
 }
 
 .sidebar nav ul {
   list-style: none;
-  padding-left: 0;
+  padding: 0;
+  width: 100%;
 }
 
 .sidebar nav ul li {
-  padding: 12px 20px;
+  width: 100%;
 }
 
 .sidebar nav ul li.active,
@@ -47,15 +57,26 @@ body {
 }
 
 .sidebar nav ul li a {
-  color: white;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 24px;
+  color: #fff;
   text-decoration: none;
-  display: block;
+  font-weight: 500;
+  font-size: 15px;
+  transition: background 0.3s, padding-left 0.3s;
 }
 
-body {
-  font-family: Arial, sans-serif;
-  margin: 20px;
-  background: #f0f2f5;
+.sidebar nav ul li.active a,
+.sidebar nav ul li a:hover {
+  background-color: #1d2742;
+  padding-left: 32px;
+  border-left: 4px solid #72c172;
+}
+
+.sidebar nav ul li a i {
+  min-width: 20px;
 }
 
 .main-content {
@@ -71,6 +92,7 @@ body {
   font-weight: 700;
   text-align: left;
 }
+
 .order-table {
   width: 100%;
   border-collapse: collapse;
@@ -80,6 +102,7 @@ body {
   overflow: hidden;
   margin-top: 10px;
 }
+
 .order-table th,
 .order-table td {
   padding: 18px 20px;
@@ -108,6 +131,7 @@ body {
 .order-table td {
   border-bottom: 1px solid #eee;
 }
+
 .view-button {
   background-color: #5d82a9;
   color: white;
@@ -127,25 +151,6 @@ body {
   text-decoration: none;
 }
 
-/* Mobile Friendly */
-@media (max-width: 768px) {
-  .order-table th,
-  .order-table td {
-    padding: 12px 10px;
-    font-size: 12px;
-  }
-
-   .main-content {
-    padding: 20px;
-  }
-
-  .view-button {
-    padding: 6px 12px;
-    font-size: 12px;
-  }
-}
-
-
 .status {
   padding: 6px 14px;
   border-radius: 20px;
@@ -164,7 +169,6 @@ body {
   color: #137333;
 }
 
-
 table {
   width: 100%;
   border-collapse: collapse;
@@ -172,4 +176,21 @@ table {
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+@media (max-width: 768px) {
+  .order-table th,
+  .order-table td {
+    padding: 12px 10px;
+    font-size: 12px;
+  }
+
+  .main-content {
+    padding: 20px;
+  }
+
+  .view-button {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
 }

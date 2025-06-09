@@ -7,6 +7,8 @@
   <title>History - SnackTrack</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="stylesheet" href="history.css" />
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 
   <style>
     #orderChart {
@@ -49,19 +51,20 @@
 <body>
   <div class="container">
     <aside class="sidebar">
-      <div class="logo"><img src="https://codia-f2c.s3.us-west-1.amazonaws.com/image/2025-04-20/Otu7tsSTg1.png"
-          alt="Logo"></div>
-      <nav>
-        <ul>
-          <li class="active"><a href="adminDashboard.html">Dashboard</a></li>
-          <li><a href="adminOrderList.html">Order List</a></li>
-          <li><a href="adminOrderHistory.html">History</a></li>
-          <li><a href="adminFeedback.html">Feedback</a></li>
-          <li><a href="adminUser.html">Users</a></li>
-          <li><a onclick="logout(event)" href="#">logout</a></li>
-        </ul>
-      </nav>
-    </aside>
+  <div class="logo">
+    <img src="https://codia-f2c.s3.us-west-1.amazonaws.com/image/2025-04-20/Otu7tsSTg1.png" alt="Logo">
+  </div>
+  <nav>
+    <ul>
+      <li class="active"><a href="adminDashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+      <li><a href="adminOrderList.html"><i class="fas fa-list"></i> Order List</a></li>
+      <li><a href="adminOrderHistory.html"><i class="fas fa-history"></i> History</a></li>
+      <li><a href="adminFeedback.html"><i class="fas fa-comment-dots"></i> Feedback</a></li>
+      <li><a href="adminUser.html"><i class="fas fa-users"></i> Users</a></li>
+      <li><a onclick="logout(event)" href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+    </ul>
+  </nav>
+</aside>
     <main class="main-content">
       <h2>Product Order History</h2>
       <canvas id="orderChart"></canvas>
@@ -126,6 +129,21 @@
           alert('Logout failed. Please try again.');
         });
     };
+
+
+     window.addEventListener("DOMContentLoaded", () => {
+    const currentPage = window.location.pathname.split("/").pop(); // e.g., 'adminOrderList.html'
+    const navLinks = document.querySelectorAll(".sidebar nav ul li a");
+
+    navLinks.forEach(link => {
+      const linkPage = link.getAttribute("href");
+      if (linkPage === currentPage) {
+        link.parentElement.classList.add("active");
+      } else {
+        link.parentElement.classList.remove("active");
+      }
+    });
+  });
   </script>
 </body>
 

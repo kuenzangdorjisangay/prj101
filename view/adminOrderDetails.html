@@ -178,6 +178,20 @@
               });
           };
 
+           window.addEventListener("DOMContentLoaded", () => {
+    const currentPage = window.location.pathname.split("/").pop(); // e.g., 'adminOrderList.html'
+    const navLinks = document.querySelectorAll(".sidebar nav ul li a");
+
+    navLinks.forEach(link => {
+      const linkPage = link.getAttribute("href");
+      if (linkPage === currentPage) {
+        link.parentElement.classList.add("active");
+      } else {
+        link.parentElement.classList.remove("active");
+      }
+    });
+  });
+
         </script>
       </div>
 
