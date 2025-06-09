@@ -133,23 +133,21 @@ body {
 }
 
 .view-button {
-  background-color: #5d82a9;
+  background-color: #3498db;
   color: white;
-  padding: 8px 16px;
-  font-size: 13px;
-  font-weight: 500;
+  padding: 8px 14px;
   border: none;
   border-radius: 6px;
-  text-decoration: none;
-  transition: background-color 0.2s ease, transform 0.2s ease;
-  display: inline-block;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s;
 }
 
 .view-button:hover {
-  background-color: #4b6e94;
+  background-color: #2980b9;
   transform: scale(1.05);
-  text-decoration: none;
 }
+
 
 .status {
   padding: 6px 14px;
