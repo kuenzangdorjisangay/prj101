@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order Detail - SnackTrack</title>
+  <link rel="stylesheet" href="orderdetail.css" />
+</head>
+
+<body>
+  <div class="container">
+    <aside class="sidebar">
+      <div class="logo">
+        <img src="https://codia-f2c.s3.us-west-1.amazonaws.com/image/2025-04-20/Otu7tsSTg1.png" alt="Logo">
+      </div>
+      <nav>
+        <ul>
+          <li class="active"><a href="adminDashboard.html">Dashboard</a></li>
+          <li><a href="adminOrderList.html">Order List</a></li>
+          <li><a href="adminOrderHistory.html">History</a></li>
+          <li><a href="adminFeedback.html">Feedback</a></li>
+          <li><a href="adminUser.html">Users</a></li>
+          <li><a onclick="logout(event)" href="#">logout</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <h2 id="order-id">Order ID #555231</h2>
+      <div class="customer-info">
+        <p><strong id="customer-name">Kinley Dorji</strong></p>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Sl No</th>
+            <th>Product Description</th>
+            <th>Price</th>
+            <th>Qty</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody id="order-products-tbody">
+          <!-- from backend  -->
+        </tbody>
+
+      </table>
+      <div class="summary">
+        <p>
+          <strong>Subtotal:</strong>
+          <input type="number" id="subtotal" value="740" />
+        </p>
+        <p>
+          <strong>Packing:</strong>
+          <input type="number" id="packing" value="0" />
+        </p>
+        <p class="total">
+          <strong>Total:</strong>
+          <input type="number" id="grandTotal" value="740" />
+        </p>
+        <button id="submitOrder">Order is Ready!</button>
+        <script>
+          function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+          }
+          document.getElementById("submitOrder").addEventListener("click", async function () {
+            const orderId = getQueryParam('orderId');
+            if (!orderId) {
+              alert('Order ID not specified');
+              return;
+            }
+
+            try {
+              const response = await fetch('/api/sendOrderReadyEmail', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ orderId })
+              });
+
+              const result = await response.json();
+
+              if (result.success) {
+                alert('Notification email sent to customer successfully!');
+                // Redirect after email sent
+
+              } else {
+                alert('Failed to send notification email: ' + (result.message || 'Unknown error'));
+              }
+            } catch (error) {
+              console.error('Error sending notification email:', error);
+              alert('Error sending notification email. Please try again.');
+            }
+          });
+
+          //load orderDetail
+          async function loadOrderDetails() {
+            const orderId = getQueryParam('orderId');
+            if (!orderId) {
+              alert('Order ID not specified');
+              return;
+            }
+
+            document.getElementById('order-id').textContent = `Order ID #${orderId}`;
+
+            try {
+              const response = await fetch(`/api/orderDetail/${orderId}`, {
+                headers: { 'Content-Type': 'application/json' }
+              });
+
+              if (!response.ok) {
+                throw new Error('Failed to fetch order details');
+              }
+
+              const result = await response.json();
+
+              if (!result.success) {
+                throw new Error(result.message || 'Failed to load order details');
+              }
+
+              const data = result.data;
+
+              // Update customer name
+              document.getElementById('customer-name').textContent = data.userName;
+
+              // Populate products table
+              const tbody = document.getElementById('order-products-tbody');
+              tbody.innerHTML = ''; // Clear existing rows
+
+              data.products.forEach((product, index) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+            <td>${index + 1}</td>
+            <td>${product.productName}</td>
+            <td><input type="number" class="price" value="${product.price}" readonly /></td>
+            <td><input type="number" class="qty" value="${product.quantity}" readonly /></td>
+            <td><input type="number" class="item-total" value="${product.total}" readonly /></td>
+        `;
+                tbody.appendChild(tr);
+              });
+
+              // Update summary fields
+              document.getElementById('subtotal').value = data.subtotal;
+              document.getElementById('packing').value = data.packing;
+              document.getElementById('grandTotal').value = data.grandTotal;
+
+            } catch (error) {
+              console.error('Error loading order details:', error);
+              alert('Failed to load order details. Please try again.');
+            }
+          }
+
+          window.addEventListener('DOMContentLoaded', loadOrderDetails);
+
+
+          //logout
+          const logout = function (event) {
+            event.preventDefault(); // Prevent link navigation
+
+            // Clear localStorage (optional if you're not using it)
+            localStorage.removeItem('token');
+
+            // Call backend to clear cookie
+            fetch('/api/auth/logout', {
+              method: 'POST',
+              credentials: 'include'
+            })
+              .then(res => res.json())
+              .then(data => {
+                alert(data.message || 'Logged out successfully');
+                window.location.href = 'login.html';
+              })
+              .catch(err => {
+                console.error('Logout error:', err);
+                alert('Logout failed. Please try again.');
+              });
+          };
+
+        </script>
+      </div>
+
+    </main>
+  </div>
+</body>
+
+</html>

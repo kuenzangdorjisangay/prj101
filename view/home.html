@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Canteen - Hassle-Free College Dining</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600&display=swap">
+  <link rel="stylesheet" href="home.css">
+</head>
+<style>
+  :root {
+    --default-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      Ubuntu, "Helvetica Neue", Helvetica, Arial, "PingFang SC",
+      "Hiragino Sans GB", "Microsoft Yahei UI", "Microsoft Yahei",
+      "Source Han Sans CN", sans-serif;
+    --primary-color: #6a93ba;
+    --secondary-color: #a8d3f9;
+    --accent-color: #72c172;
+    --text-color: #000000;
+    --text-light: #ffffff;
+    --text-muted: #787575;
+  }
+
+  /* Reset and global styles */
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: Inter, var(--default-font-family);
+    line-height: 1.5;
+    color: var(--text-color);
+    overflow-x: hidden;
+  }
+
+  input,
+  select,
+  textarea,
+  button {
+    outline: 0;
+  }
+
+  /* Container styles */
+  .container {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  /* Header styles */
+  .site-header {
+    position: relative;
+    width: 100%;
+    height: 60px;
+    background: url(https://codia-f2c.s3.us-west-1.amazonaws.com/image/2025-04-20/aVNzgdkbpg.png) no-repeat center;
+    background-size: cover;
+    z-index: 10;
+  }
+
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    padding: 0 50px;
+  }
+
+  .logo {
+    width: 50px;
+    height: 50px;
+    background: url(https://codia-f2c.s3.us-west-1.amazonaws.com/image/2025-04-20/Otu7tsSTg1.png) no-repeat center;
+    background-size: cover;
+  }
+
+  .main-nav {
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-list {
+    display: flex;
+    gap: 30px;
+    list-style: none;
+  }
+
+  .nav-item a {
+    color: var(--text-light);
+    font-size: 18px;
+    font-weight: 400;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .nav-item a:hover {
+    opacity: 0.8;
+  }
+
+
+  /* Hero section */
+  .hero {
+    position: relative;
+    width: 100%;
+    height: 800px;
+    background: url(https://codia-f2c.s3.us-west-1.amazonaws.com/image/2025-04-20/vUUgArAf6w.png) no-repeat center;
+    background-size: cover;
+    color: var(--text-light);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 50px;
+  }
+
+  .hero-title {
+    display: flex;
+    /* Activate Flexbox */
+    flex-direction: column;
+    /* Stack elements vertically */
+    justify-content: center;
+    /* Center vertically */
+    align-items: center;
+    /* Center horizontally */
+    text-align: center;
+    /* Center the text */
+    height: 30vh;
+    /* Full viewport height */
+    font-size: 40px;
+
+  }
+
+  .hero-description {
+    display: flex;
+    /* Activate Flexbox */
+    flex-direction: column;
+    /* Stack elements vertically */
+    justify-content: center;
+    /* Center vertically */
+    align-items: center;
+    /* Center horizontally */
+    text-align: center;
+    /* Center the text */
+    height: 30vh;
+    /* Full viewport height */
+    font-size: 20px;
+
+
+  }
+
+  .hero-buttons {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 15px 40px;
+    border-radius: 50px;
+    font-size: 20px;
+    font-weight: 500;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn-primary {
+    background-color: var(--secondary-color);
+    color: var(--text-light);
+  }
+
+  .btn-primary:hover {
+    background-color: #8fc1f5;
+  }
+
+  .btn-secondary {
+    background-color: var(--accent-color);
+    color: var(--text-light);
+  }
+
+  .btn-secondary:hover {
+    background-color: #5eae5e;
+  }
+
+  /* Specials section */
+  .specials-section {
+    padding: 80px 0;
+  }
+
+  .section-title {
+    font-size: 48px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .specials-grid {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    margin: 0 auto;
+    max-width: 1200px;
+  }
+
+  .food-card {
+    flex: 1;
+    background: #ffffff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+
+  .food-card:hover {
+    transform: translateY(-10px);
+  }
+
+  .food-image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+  }
+
+  .food-content {
+    padding: 20px;
+  }
+
+  .food-title {
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+
+  .food-price {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 15px;
+  }
+
+  .food-description {
+    font-size: 16px;
+    color: #7c7f80;
+    line-height: 1.5;
+  }
+
+  /* Features section */
+  .features-section {
+    padding: 80px 0;
+    background-color: #f9f9f9;
+  }
+
+  .features-heading {
+    font-size: 48px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .features-icons {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 50px;
+    max-width: 1200px;
+    margin: 0 auto 50px;
+  }
+
+  .feature-icon {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom:30px;
+  }
+
+  .time-icon {
+    background: url(https://codia-f2c.s3.us-west-1.amazonaws.com/image/2025-04-20/ugoCJLpN7O.png) no-repeat center;
+    background-size: cover;
+  }
+
+ 
+
+  .payment-icon {
+    background: url(https://codia-f2c.s3.us-west-1.amazonaws.com/image/2025-04-20/X6RHHn27U4.png) no-repeat center;
+    background-size: cover;
+  }
+
+  .features-grid {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .feature {
+    flex: 1;
+    padding: 0 20px;
+    text-align: center;
+  }
+
+  .feature-title {
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+
+  .feature-description {
+    font-size: 18px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* CTA section */
+  .cta-section {
+    padding: 100px 0;
+    text-align: center;
+  }
+
+  .cta-title {
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    line-height: 1.2;
+  }
+
+  .cta-description {
+    font-size: 24px;
+    max-width: 800px;
+    margin: 0 auto 50px;
+    line-height: 1.5;
+  }
+
+  /* Footer */
+  .site-footer {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    padding: 80px 0 40px;
+  }
+
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .footer-column {
+    flex: 1;
+  }
+
+  .footer-heading {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+
+  .footer-links {
+    list-style: none;
+  }
+
+  .footer-link {
+    margin-bottom: 15px;
+  }
+
+  .footer-link a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-size: 16px;
+    transition: opacity 0.3s ease;
+  }
+
+  .footer-link a:hover {
+    opacity: 0.8;
+  }
+
+  /* Responsive adjustments for desktop */
+</style>
+
+<body>
+
+  <!-- Header Section -->
+  <header class="site-header">
+    <div class="header-content">
+      <div class="logo" aria-label="Smart Canteen Logo"></div>
+
+      <div class="main-nav">
+        <nav>
+          <ul class="nav-list">
+            <li class="nav-item"><a href="home.html">Home</a></li>
+            <li class="nav-item"><a href="about.html">About</a></li>
+            <li class="nav-item"><a href="menu.html">Menu</a></li>
+            <li class="nav-item"><a href="contact.html">Contact</a></li>
+            <li class="nav-item"><a href="feedback.html">Feedback</a></li>
+            <li class="nav-item"><a href="profile.html">Profile</a></li>
+            <li class="nav-item"><a onclick="logout(event)" href="#">Log Out</a></li>
+
+
+          </ul>
+        </nav>
+
+
+      </div>
+    </div>
+  </header>
+
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <h1 class="hero-title">Smart Canteen: Hassle-Free College Dining</h1>
+      <p class="hero-description">
+        Revolutionize your campus dining experience with our seamless canteen reservation system.
+        Skip the long queues, pre-order your favorite meals, and enjoy a stress-free lunchtime.
+        Designed for convenience, efficiency, and a better student life!
+      </p>
+      <div class="hero-buttons">
+        
+        <a href="menu.html" class="btn btn-secondary">View Menu</a>
+      </div>
+    </section>
+
+    <!-- Today's Specials Section -->
+    <section class="specials-section">
+      <div class="container">
+        <h2 class="section-title">Today's Specials</h2>
+
+        <div class="specials-grid">
+          <article class="food-card">
+            <img src="https://codia-f2c.s3.us-west-1.amazonaws.com/image/2025-04-20/1RUFmP2ELa.png" alt="Egg Fried Rice"
+              class="food-image">
+            <div class="food-content">
+              <h3 class="food-title">Egg Fried Rice</h3>
+              <p class="food-price">₹80</p>
+              <p class="food-description">
+                Fragrant rice stir-fried with eggs, vegetables, and savory seasonings.
+                A quick and satisfying meal.
+              </p>
+            </div>
+          </article>
+
+          <article class="food-card">
+            <img src="https://codia-f2c.s3.us-west-1.amazonaws.com/image/2025-04-20/TF5bWQVeMb.png" alt="Samosa"
+              class="food-image">
+            <div class="food-content">
+              <h3 class="food-title">Samosa</h3>
+              <p class="food-price">Nu.15 per piece</p>
+              <p class="food-description">
+                Crispy pastry filled with spiced potatoes and peas.
+                Perfect for a quick snack or appetizer.
+              </p>
+            </div>
+          </article>
+
+          <article class="food-card">
+            <img src="https://codia-f2c.s3.us-west-1.amazonaws.com/image/2025-04-20/DWQFjtVyTj.png"
+              alt="Rice with Chicken Curry" class="food-image">
+            <div class="food-content">
+              <h3 class="food-title">Rice with Chicken Curry</h3>
+              <p class="food-price">₹90</p>
+              <p class="food-description">
+                Aromatic rice served with rich, spicy chicken curry.
+                A hearty and flavorful meal option.
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+      <div class="container">
+        <h2 class="features-heading">Why Choose Smart Canteen?</h2>
+
+        <div class="features-icons">
+          <div class="feature-icon time-icon" aria-label="Save Time Icon"></div>
+          <div class="feature-icon seat-icon-container">
+            <div class="seat-icon" aria-label="Reserve Seats Icon"></div>
+          </div>
+          <div class="feature-icon payment-icon" aria-label="Easy Payment Icon"></div>
+        </div>
+
+        <div class="features-grid">
+          <div class="feature">
+            <h3 class="feature-title">Save Time</h3>
+            <p class="feature-description">
+              Skip the long queues and pre-order your meals to pick up at your convenience.
+            </p>
+          </div>
+
+          <div class="feature">
+            <h3 class="feature-title">Easy Payment</h3>
+            <p class="feature-description">
+              Pay securely through uploading screenshot.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+      <div class="container">
+        <h2 class="cta-title">Ready to transform your dining experience?</h2>
+        <p class="cta-description">
+          Join thousands of students who are already enjoying hassle-free meals with Smart Canteen.
+        </p>
+        <a href="#" class="btn btn-primary">Get Started Today</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-column">
+          <h3 class="footer-heading">Quick Links</h3>
+          <ul class="footer-links">
+            <li class="footer-link"><a href="home.html">Home</a></li>
+            <li class="footer-link"><a href="menu.html">Menu</a></li>
+            <li class="footer-link"><a href="about.html">About</a></li>
+            <li class="footer-link"><a href="contact.html">Contact</a></li>
+            <li class="footer-link"><a href="feedback.html">Feedback</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h3 class="footer-heading">Explore More</h3>
+          <ul class="footer-links">
+            <li class="footer-link"><a href="#">Locations</a></li>
+            <li class="footer-link"><a href="#">Careers</a></li>
+            <li class="footer-link"><a href="#">Events</a></li>
+            <li class="footer-link"><a href="#">FAQs</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h3 class="footer-heading">Stay Connected</h3>
+          <ul class="footer-links">
+            <li class="footer-link"><a href="#">Facebook</a></li>
+            <li class="footer-link"><a href="#">Instagram</a></li>
+            <li class="footer-link"><a href="#">Twitter</a></li>
+            <li class="footer-link"><a href="#">YouTube</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const logout = function (event) {
+      event.preventDefault(); // Prevent link navigation
+
+      // Clear localStorage (optional if you're not using it)
+      localStorage.removeItem('token');
+
+      // Call backend to clear cookie
+      fetch('/api/auth/logout', {
+        method: 'POST',
+        credentials: 'include'
+      })
+        .then(res => res.json())
+        .then(data => {
+          alert(data.message || 'Logged out successfully');
+          window.location.href = 'login.html';
+        })
+        .catch(err => {
+          console.error('Logout error:', err);
+          alert('Logout failed. Please try again.');
+        });
+    };
+  </script>
+</body>
+
+</html>

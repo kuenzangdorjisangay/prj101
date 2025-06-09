@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>User Registration</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #ffffff, #ffffff);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      padding: 20px;
+    }
+
+    .form-box {
+      background-color: #ffffff;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      text-align: center;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px 15px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    input:focus {
+      border-color: #0077b6;
+      outline: none;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      color: #444;
+      margin: 10px 0 15px;
+      text-align: left;
+    }
+
+    label input[type="checkbox"] {
+      margin-right: 8px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #0077b6;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #005f8a;
+    }
+
+    .error {
+      color: red;
+      font-size: 13px;
+      text-align: left;
+      margin-bottom: 5px;
+    }
+
+    p,
+    a {
+      font-size: 14px;
+      color: #555;
+      margin-top: 15px;
+    }
+
+    a {
+      color: #447690;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="form-box">
+      <h2>Sign Up</h2>
+      <form id="signupForm">
+        <input type="text" name="name" placeholder="Name" required />
+        <div id="nameError" class="error"></div>
+
+        <input type="email" name="email" placeholder="Email" required />
+        <div id="emailError" class="error"></div>
+
+        <input type="password" name="password" placeholder="Password" required />
+        <div id="passwordError" class="error"></div>
+
+        <input type="password" name="confirm" placeholder="Confirm Password" required />
+        <div id="confirmError" class="error"></div>
+
+        <label>
+          <input type="checkbox" name="agree" />
+          I agree to the terms and conditions.
+        </label>
+        <div id="agreeError" class="error"></div>
+
+        <button type="submit">Sign Up</button>
+      </form>
+
+      <p>Already have an account? <a href="login.html">Log In</a></p>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("signupForm").addEventListener("submit", async function (event) {
+      event.preventDefault();
+
+      const form = event.target;
+      const name = form.name.value.trim();
+      const email = form.email.value.trim();
+      const password = form.password.value;
+      const confirm = form.confirm.value;
+      const agree = form.agree.checked;
+
+      // Clear previous errors
+      document.getElementById("nameError").textContent = "";
+      document.getElementById("emailError").textContent = "";
+      document.getElementById("passwordError").textContent = "";
+      document.getElementById("confirmError").textContent = "";
+      document.getElementById("agreeError").textContent = "";
+
+      let hasError = false;
+
+      if (!name) {
+        document.getElementById("nameError").textContent = "Name is required.";
+        hasError = true;
+      }
+
+      const emailPattern = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+      if (!email || !emailPattern.test(email)) {
+        document.getElementById("emailError").textContent = "Please enter a valid email address.";
+        hasError = true;
+      }
+
+      if (password.length < 6) {
+        document.getElementById("passwordError").textContent = "Password must be at least 6 characters.";
+        hasError = true;
+      }
+
+      if (password !== confirm) {
+        document.getElementById("confirmError").textContent = "Passwords do not match.";
+        hasError = true;
+      }
+
+      if (!agree) {
+        document.getElementById("agreeError").textContent = "You must agree to the terms.";
+        hasError = true;
+      }
+
+      if (hasError) return;
+
+      // Submit to backend
+      try {
+        const res = await fetch("http://localhost:3000/api/auth/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name,
+            email,
+            password,
+            confirmPassword: confirm,
+            termsAccepted: agree
+          })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          alert("Signup successful!");
+          window.location.href = "/login";
+        } else {
+          alert("Signup failed: " + data.message);
+        }
+      } catch (err) {
+        alert("Server error: " + err.message);
+      }
+    });
+  </script>
+</body>
+
+</html>

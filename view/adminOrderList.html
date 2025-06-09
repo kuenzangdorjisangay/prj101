@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order List - SnackTrack</title>
+  <link rel="stylesheet" href="order-list.css" />
+</head>
+
+<body>
+  <div class="container">
+    <aside class="sidebar">
+      <div class="logo">
+        <img src="https://codia-f2c.s3.us-west-1.amazonaws.com/image/2025-04-20/Otu7tsSTg1.png" alt="SnackTrack Logo">
+      </div>
+      <nav>
+        <ul>
+          <li class="active"><a href="adminDashboard.html">Dashboard</a></li>
+          <li><a href="adminOrderList.html">Order List</a></li>
+          <li><a href="adminOrderHistory.html">History</a></li>
+          <li><a href="adminFeedback.html">Feedback</a></li>
+          <li><a href="adminUser.html">Users</a></li>
+          <li><a onclick="logout(event)" href="#">logout</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <h2>Your Orders</h2>
+      <table class="order-table">
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Date</th>
+            <th>Customer Name</th>
+            <th>Amount</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="orders-tbody">
+          <!-- dynapic value from backend -->
+        </tbody>
+      </table>
+    </main>
+  </div>
+
+
+
+  <script>
+    const apiUrl = '/api/orderList/user-summary';
+
+    async function loadOrders() {
+      try {
+        const response = await fetch(apiUrl, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch orders');
+        }
+
+        const data = await response.json();
+
+        if (!data.success) {
+          throw new Error('API returned error');
+        }
+
+        const ordersTbody = document.getElementById('orders-tbody');
+        ordersTbody.innerHTML = ''; // Clear any existing rows
+
+        // Flatten all user orders into the table
+        data.data.forEach(userGroup => {
+          userGroup.orders.forEach(order => {
+            const tr = document.createElement('tr');
+
+            // Format date
+            const orderDate = order.orderDate
+              ? new Date(order.orderDate).toLocaleDateString()
+              : 'N/A';
+
+            tr.innerHTML = `
+            <td>#${order.orderId}</td>
+            <td>${orderDate}</td>
+            <td>${userGroup.userName}</td>
+            <td>Nu. ${order.orderTotal.toFixed(2)}</td>
+            <td><a class="view-button" href="adminOrderDetails.html?orderId=${order.orderId}">View</a></td>
+          `;
+
+            ordersTbody.appendChild(tr);
+          });
+        });
+
+      } catch (error) {
+        console.error('Error loading orders:', error);
+        const ordersTbody = document.getElementById('orders-tbody');
+        ordersTbody.innerHTML = `<tr><td colspan="5">Failed to load orders.</td></tr>`;
+      }
+    }
+
+    // Load orders on page load
+    window.addEventListener('DOMContentLoaded', loadOrders);
+
+    //logout
+    const logout = function (event) {
+      event.preventDefault(); // Prevent link navigation
+
+      // Clear localStorage (optional if you're not using it)
+      localStorage.removeItem('token');
+
+      // Call backend to clear cookie
+      fetch('/api/auth/logout', {
+        method: 'POST',
+        credentials: 'include'
+      })
+        .then(res => res.json())
+        .then(data => {
+          alert(data.message || 'Logged out successfully');
+          window.location.href = 'login.html';
+        })
+        .catch(err => {
+          console.error('Logout error:', err);
+          alert('Logout failed. Please try again.');
+        });
+    };
+  </script>
+</body>
+
+</html>

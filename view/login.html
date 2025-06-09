@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Login | Snack Track</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #ffffff, #f0f0f0);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      padding: 20px;
+    }
+
+    .form-box {
+      background-color: #ffffff;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      text-align: center;
+    }
+
+    .logo {
+      width: 100px;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px 15px;
+      margin-bottom: 5px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    .error {
+      color: red;
+      font-size: 13px;
+      margin-bottom: 10px;
+      text-align: left;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #0077b6;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #02547a;
+    }
+
+    p,
+    a {
+      font-size: 14px;
+      color: #555;
+      margin-top: 15px;
+    }
+
+    a {
+      color: #0077b6;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="form-box">
+      <img src="https://codia-f2c.s3.us-west-1.amazonaws.com/image/2025-04-20/Otu7tsSTg1.png" alt="Snack Track Logo" class="logo" />
+      <h2>Log In</h2>
+
+      <form id="loginForm">
+        <input type="email" id="email" name="email" placeholder="Email" required />
+        <div id="emailError" class="error"></div>
+
+        <input type="password" id="password" name="password" placeholder="Password" required />
+        <div id="passwordError" class="error"></div>
+
+        <button type="submit">Confirm</button>
+      </form>
+
+      <p>Need an account? <a href="signup.html">Sign Up</a></p>
+      <a href="find-account.html">Forgot your password?</a>
+
+    </div>
+  </div>
+
+  <script>
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+    const emailError = document.getElementById("emailError");
+    const passwordError = document.getElementById("passwordError");
+
+    function validateEmail() {
+      const email = emailInput.value.trim();
+      const pattern = /^[^ ]+@[^ ]+\.[a-z]{2,}$/i;
+      if (!pattern.test(email)) {
+        emailError.textContent = "Enter a valid email address.";
+        return false;
+      } else {
+        emailError.textContent = "";
+        return true;
+      }
+    }
+
+    function validatePassword() {
+      const password = passwordInput.value.trim();
+      if (password.length < 6) {
+        passwordError.textContent = "Password must be at least 6 characters.";
+        return false;
+      } else {
+        passwordError.textContent = "";
+        return true;
+      }
+    }
+
+    emailInput.addEventListener("input", validateEmail);
+    passwordInput.addEventListener("input", validatePassword);
+
+    document.getElementById("loginForm").addEventListener("submit", async function (event) {
+      event.preventDefault();
+
+      const isEmailValid = validateEmail();
+      const isPasswordValid = validatePassword();
+
+      if (isEmailValid && isPasswordValid) {
+        try {
+          const response = await fetch('/api/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include', // important for sending/receiving cookies
+            body: JSON.stringify({
+              email: emailInput.value.trim(),
+              password: passwordInput.value.trim(),
+            }),
+          });
+
+          const data = await response.json();
+
+          if (response.ok) {
+            // ✅ Save token from response body to localStorage
+            if (data.token) {
+              localStorage.setItem('token', data.token);
+            } else {
+              console.warn('No token received in response');
+            }
+            alert(data.message);
+
+
+            // Role-based redirection
+            if (data.role === 'admin') {
+              window.location.href = 'adminDashboard.html';
+            } else if (data.role === 'user') {
+              window.location.href = 'home.html';
+            } else {
+              window.location.href = 'login.html'; // fallback
+            }
+          } else {
+            alert(data.message || 'Login failed');
+          }
+        } catch (error) {
+          console.error('Error during login:', error);
+          alert('An error occurred. Please try again later.');
+        }
+      }
+    });
+
+  </script>
+</body>
+
+</html>

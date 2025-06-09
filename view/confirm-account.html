@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Confirm Account | Snack Track</title>
+  <!-- <link rel="stylesheet" href="styles.css" /> -->
+  <link rel="" href="new-password.html" />
+  <style>
+    /* styles.css */
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .form-box {
+      background-color: #ffffff;
+      padding: 30px 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .form-box h2 {
+      margin-bottom: 10px;
+      font-size: 24px;
+      color: #333333;
+    }
+
+    .form-box p {
+      font-size: 14px;
+      color: #666666;
+      margin-bottom: 25px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 12px 15px;
+      margin-bottom: 20px;
+      border: 1px solid #cccccc;
+      border-radius: 8px;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px 15px;
+      background-color: #0077b6;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-bottom: 10px;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #005f8a;
+    }
+
+    button.secondary {
+      background-color: #e0e0e0;
+      color: #333333;
+    }
+
+    button.secondary:hover {
+      background-color: #cfcfcf;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="form-box">
+      <h2>Confirm your account</h2>
+      <p>
+        We sent a code via email. Enter that code to confirm your account.
+      </p>
+      <input type="text" placeholder="Enter code" />
+
+      <button onclick="location.href='login.html'">Continue</button>
+      <button class="secondary" onclick="location.href='login.html'">
+        Cancel
+      </button>
+    </div>
+  </div>
+</body>
+
+</html>

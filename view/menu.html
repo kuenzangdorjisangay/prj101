@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Canteen - About Us</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <style>
+      /* CSS Variables */
+      :root {
+        --default-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Ubuntu, "Helvetica Neue", Helvetica, Arial, "PingFang SC",
+          "Hiragino Sans GB", "Microsoft Yahei UI", "Microsoft Yahei",
+          "Source Han Sans CN", sans-serif;
+        --primary-color: #6a93ba;
+        --secondary-color: #a8d3f9;
+        --accent-color: #72c172;
+        --text-color: #000000;
+        --text-light: #ffffff;
+        --text-muted: #787575;
+      }
+
+      /* Reset and global styles */
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: Inter, var(--default-font-family);
+        line-height: 1.5;
+        color: var(--text-color);
+        overflow-x: hidden;
+      }
+
+      input,
+      select,
+      textarea,
+      button {
+        outline: 0;
+      }
+
+      /* Container styles */
+      .container {
+        width: 100%;
+        max-width: 1440px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      /* Header styles */
+      .site-header {
+        position: relative;
+        width: 100%;
+        height: 60px;
+        background: url(https://codia-f2c.s3.us-west-1.amazonaws.com/image/2025-04-20/aVNzgdkbpg.png) no-repeat center;
+        background-size: cover;
+        z-index: 10;
+      }
+
+      .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 100%;
+        padding: 0 50px;
+      }
+
+      .logo {
+        width: 50px;
+        height: 50px;
+        background: url(https://codia-f2c.s3.us-west-1.amazonaws.com/image/2025-04-20/Otu7tsSTg1.png) no-repeat center;
+        background-size: cover;
+      }
+
+      .main-nav {
+        display: flex;
+        align-items: center;
+      }
+
+      .nav-list {
+        display: flex;
+        gap: 30px;
+        list-style: none;
+      }
+
+      .nav-item a {
+        color: var(--text-light);
+        font-size: 18px;
+        font-weight: 400;
+        text-decoration: none;
+        transition: opacity 0.3s ease;
+      }
+
+      .nav-item a:hover {
+        opacity: 0.8;
+      }
+
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .categories {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .menu-item {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .menu-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .menu-item-content {
+            padding: 20px;
+        }
+
+        .menu-item-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .menu-item-price {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .menu-item-description {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .order-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .done-btn,
+        .back-btn {
+            display: block;
+            margin: 40px auto 0;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 40px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+
+
+        .invoice-page {
+            display: none;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .invoice-header {
+            text-align: center;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .invoice-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .invoice-table th,
+        .invoice-table td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .invoice-total {
+            text-align: right;
+            font-weight: bold;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+
+        .site-footer {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            padding: 60px 20px 30px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        .footer-column {
+            flex: 1;
+            min-width: 200px;
+            margin: 20px 0;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .menu-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header Section -->
+  <header class="site-header">
+    <div class="header-content">
+      <div class="logo" aria-label="Smart Canteen Logo"></div>
+
+      <div class="main-nav">
+        <nav>
+          <ul class="nav-list">
+            <li class="nav-item"><a href="home.html">Home</a></li>
+            <li class="nav-item"><a href="about.html">About</a></li>
+            <li class="nav-item"><a href="menu.html">Menu</a></li>
+            <li class="nav-item"><a href="contact.html">Contact</a></li>
+            <li class="nav-item"><a href="feedback.html">Feedback</a></li>
+            <li class="nav-item"><a href="profile.html">Profile</a></li>
+            <li class="nav-item"><a onclick="logout(event)" href="#">Log Out</a></li>
+
+
+          </ul>
+        </nav>
+
+
+      </div>
+    </div>
+  </header>
+    <main class="main-content" id="menu-page">
+        <h1>Our Menu</h1>
+        <p class="subtitle">Explore our wide variety of delicious meals and snacks.</p>
+        
+        <div class="menu-grid" id="menuContainer"></div>
+        <button class="done-btn" onclick="showInvoice()">Done</button>
+        <div class="cart-counter" id="cartCounter">0</div>
+    </main>
+
+    <div class="invoice-page" id="invoicePage">
+        <div class="invoice-header">
+            <h2>Order Invoice</h2>
+            <p>Thank you for your order!</p>
+        </div>
+        <div class="invoice-details">
+            <div>
+                <h3>Order Details</h3>
+                <p>Order #: <span id="orderNumber"></span></p>
+                <p>Date: <span id="orderDate"></span></p>
+            </div>
+            <div>
+                <h3>Customer Details</h3>
+                <p>Name: Guest</p>
+                <p>Phone: -</p>
+            </div>
+        </div>
+        <table class="invoice-table">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Price</th>
+                    <th>Qty</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody id="invoiceItems"></tbody>
+        </table>
+        <div class="invoice-total">Total: Nu.<span id="invoiceTotal">0</span></div>
+        <button class="back-btn" onclick="backToMenu()">Back to Menu</button>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li class="footer-link"><a href="home.html">Home</a></li>
+                    <li class="footer-link"><a href="menu.html">Menu</a></li>
+                    <li class="footer-link"><a href="about.html">About</a></li>
+                    <li class="footer-link"><a href="contact.html">Contact</a></li>
+                    <li class="footer-link"><a href="feedback.html">Feedback</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Explore More</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Locations</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Events</a></li>
+                    <li><a href="#">FAQs</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Stay Connected</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let cart = [];
+        let cartCount = 0;
+
+        function addToCart(id, name, price, image) {
+            const existingItem = cart.find(item => item.id === id);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: id,
+                    name: name,
+                    price: price,
+                    image: image,
+                    quantity: 1
+                });
+            }
+            cartCount++;
+            updateCartCounter();
+        }
+
+
+
+        function updateCartCounter() {
+            document.getElementById('cartCounter').textContent = cartCount;
+        }
+        function parseJwt(token) {
+            try {
+                const base64Url = token.split('.')[1];
+                const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                const jsonPayload = decodeURIComponent(atob(base64).split('').map(c =>
+                    '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+                ).join(''));
+                return JSON.parse(jsonPayload);
+            } catch (e) {
+                console.error('Failed to decode token:', e);
+                return null;
+            }
+        }
+
+        function showInvoice() {
+            const token = localStorage.getItem('token');
+            console.log('🔐 Token from localStorage:', token);
+
+            if (!token) {
+                alert('⚠️ No token found. Please login first.');
+                return;
+            }
+
+            const decoded = parseJwt(token);
+            console.log('📦 Decoded token:', decoded);
+
+            if (!decoded || !decoded.userId) {
+                alert('⚠️ Invalid or expired token. Please login again.');
+                return;
+            }
+
+            if (cart.length === 0) {
+                alert('🛒 Your cart is empty. Please add some items first.');
+                return;
+            }
+
+            // Switch UI to invoice page
+            document.getElementById('menu-page').style.display = 'none';
+            document.getElementById('invoicePage').style.display = 'block';
+
+            const now = new Date();
+            document.getElementById('orderDate').textContent = now.toLocaleDateString() + ' ' + now.toLocaleTimeString();
+            document.getElementById('orderNumber').textContent = Math.floor(Math.random() * 100000);
+
+            const invoiceItems = document.getElementById('invoiceItems');
+            invoiceItems.innerHTML = '';
+            let total = 0;
+
+            cart.forEach(item => {
+                const row = document.createElement('tr');
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                row.innerHTML = `
+                <td>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <img src="${item.image}" alt="${item.name}" style="width: 40px; height: 40px; border-radius: 5px;">
+                        ${item.name}
+                    </div>
+                </td>
+                <td>Nu.${item.price}</td>
+                <td>${item.quantity}</td>
+                <td>Nu.${itemTotal}</td>`;
+                invoiceItems.appendChild(row);
+            });
+
+            document.getElementById('invoiceTotal').textContent = total;
+
+            // 🛒 Build order payload
+            const orderPayload = {
+                items: cart.map(item => ({
+                    productId: item.id,
+                    quantity: item.quantity
+                }))
+            };
+
+            // 🔥 Submit order
+            fetch('/api/orders', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}` // ✅ Send token correctly
+                },
+                body: JSON.stringify(orderPayload)
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (!data.success) {
+                        console.error('❌ Order saving failed:', data.message);
+                        alert('Order saving failed: ' + data.message);
+                    } else {
+                        console.log('✅ Order saved successfully: ', data);
+                        alert('🎉 Order placed successfully! ');
+                    }
+                })
+                .catch(error => {
+                    console.error('🚨 Network error while posting order:', error);
+                    alert('Network error. Failed to save order.');
+                });
+        }
+
+
+        function backToMenu() {
+            cart = [];
+            cartCount = 0;
+            updateCartCounter();
+            document.getElementById('menu-page').style.display = 'block';
+            document.getElementById('invoicePage').style.display = 'none';
+        }
+
+        async function loadMenuItems() {
+            try {
+                const response = await fetch('/api/products/get');
+                const result = await response.json();
+                if (!result.success) throw new Error('Failed to fetch products');
+                const products = result.data;
+                const container = document.getElementById('menuContainer');
+                container.innerHTML = '';
+                products.forEach(product => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'menu-item';
+                    // In your loadMenuItems function, inside products.forEach:
+                    itemDiv.innerHTML =
+                        `<img src="${product.image}" alt="${escapeHtml(product.name)}">
+        <div class="menu-item-content">
+            <h3 class="menu-item-title">${escapeHtml(product.name)}</h3>
+            <p class="menu-item-price">Nu.${product.price} per piece</p>
+            <p class="menu-item-description">${escapeHtml(product.description || '')}</p>
+            <button class="order-btn" onclick="addToCart('${product._id}', '${escapeHtml(product.name)}', ${product.price}, '${product.image}')">Order Now</button>
+        </div>`;
+
+
+                    container.appendChild(itemDiv);
+                });
+            } catch (error) {
+                console.error('Error loading menu items:', error);
+            }
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        window.addEventListener('DOMContentLoaded', loadMenuItems);
+
+
+        //logout
+        const logout = function (event) {
+            event.preventDefault(); // Prevent link navigation
+
+            // Clear localStorage (optional if you're not using it)
+            localStorage.removeItem('token');
+
+            // Call backend to clear cookie
+            fetch('/api/auth/logout', {
+                method: 'POST',
+                credentials: 'include'
+            })
+                .then(res => res.json())
+                .then(data => {
+                    alert(data.message || 'Logged out successfully');
+                    window.location.href = 'login.html';
+                })
+                .catch(err => {
+                    console.error('Logout error:', err);
+                    alert('Logout failed. Please try again.');
+                });
+        };
+    </script>
+
+</body>
+
+</html>

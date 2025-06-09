@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Canteen - About Us</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <style>
+      /* CSS Variables */
+      :root {
+        --default-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Ubuntu, "Helvetica Neue", Helvetica, Arial, "PingFang SC",
+          "Hiragino Sans GB", "Microsoft Yahei UI", "Microsoft Yahei",
+          "Source Han Sans CN", sans-serif;
+        --primary-color: #6a93ba;
+        --secondary-color: #a8d3f9;
+        --accent-color: #72c172;
+        --text-color: #000000;
+        --text-light: #ffffff;
+        --text-muted: #787575;
+      }
+
+      /* Reset and global styles */
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: Inter, var(--default-font-family);
+        line-height: 1.5;
+        color: var(--text-color);
+        overflow-x: hidden;
+      }
+
+      input,
+      select,
+      textarea,
+      button {
+        outline: 0;
+      }
+
+      /* Container styles */
+      .container {
+        width: 100%;
+        max-width: 1440px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      /* Header styles */
+      .site-header {
+        position: relative;
+        width: 100%;
+        height: 60px;
+        background: url(https://codia-f2c.s3.us-west-1.amazonaws.com/image/2025-04-20/aVNzgdkbpg.png) no-repeat center;
+        background-size: cover;
+        z-index: 10;
+      }
+
+      .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 100%;
+        padding: 0 50px;
+      }
+
+      .logo {
+        width: 50px;
+        height: 50px;
+        background: url(https://codia-f2c.s3.us-west-1.amazonaws.com/image/2025-04-20/Otu7tsSTg1.png) no-repeat center;
+        background-size: cover;
+      }
+
+      .main-nav {
+        display: flex;
+        align-items: center;
+      }
+
+      .nav-list {
+        display: flex;
+        gap: 30px;
+        list-style: none;
+      }
+
+      .nav-item a {
+        color: var(--text-light);
+        font-size: 18px;
+        font-weight: 400;
+        text-decoration: none;
+        transition: opacity 0.3s ease;
+      }
+
+      .nav-item a:hover {
+        opacity: 0.8;
+      }
+
+      /* Main Content Styles */
+      .main-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+      }
+
+      h1 {
+        text-align: center;
+        font-size: 32px;
+        margin-bottom: 10px;
+      }
+
+      .subtitle {
+        text-align: center;
+        color: #666;
+        margin-bottom: 30px;
+      }
+
+      /* Hero section */
+      .hero {
+        position: relative;
+        text-align: center;
+      }
+
+      .hero img {
+        width: 100%;
+        height: 500px;
+        object-fit: cover;
+        filter: blur(2px);
+      }
+
+      .hero-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 20px;
+        width: 80%;
+        max-width: 600px;
+        border-radius: 10px;
+        background: rgba(0, 0, 0, 0.5);
+        color: var(--text-light);
+      }
+
+      .hero-text h2 {
+        font-size: 28px;
+        margin-bottom: 10px;
+      }
+
+      .hero-text p {
+        font-size: 16px;
+      }
+
+      /* Sections */
+      .section {
+        padding: 40px 20px;
+        background: white;
+        text-align: center;
+      }
+
+      .section h2 {
+        margin-bottom: 10px;
+        font-size: 24px;
+        font-weight: 600;
+      }
+
+      .section p,
+      .section li {
+        font-size: 16px;
+        line-height: 1.5;
+      }
+
+      /* Footer */
+      .site-footer {
+        background-color: var(--primary-color);
+        color: var(--text-light);
+        padding: 80px 0 40px;
+      }
+
+      .footer-content {
+        display: flex;
+        justify-content: space-between;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .footer-column {
+        flex: 1;
+      }
+
+      .footer-heading {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 20px;
+      }
+
+      .footer-links {
+        list-style: none;
+      }
+
+      .footer-link {
+        margin-bottom: 15px;
+      }
+
+      .footer-link a {
+        color: var(--text-light);
+        text-decoration: none;
+        font-size: 16px;
+        transition: opacity 0.3s ease;
+      }
+
+      .footer-link a:hover {
+        opacity: 0.8;
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        .header-content {
+          padding: 0 20px;
+        }
+
+        .nav-list {
+          gap: 15px;
+        }
+
+        .nav-item a {
+          font-size: 16px;
+        }
+
+        .hero img {
+          height: 300px;
+        }
+
+        .hero-text {
+          width: 90%;
+          padding: 15px;
+        }
+
+        .hero-text h2 {
+          font-size: 24px;
+        }
+
+        .hero-text p {
+          font-size: 14px;
+        }
+
+        .section {
+          padding: 20px 10px;
+        }
+
+        .footer-content {
+          flex-direction: column;
+          gap: 40px;
+        }
+
+        .footer-column {
+          text-align: center;
+        }
+      }
+
+      @media (max-width: 480px) {
+        h1 {
+          font-size: 24px;
+        }
+
+        .section h2 {
+          font-size: 20px;
+        }
+
+        .section p,
+        .section li {
+          font-size: 14px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header Section -->
+  <header class="site-header">
+    <div class="header-content">
+      <div class="logo" aria-label="Smart Canteen Logo"></div>
+
+      <div class="main-nav">
+        <nav>
+          <ul class="nav-list">
+            <li class="nav-item"><a href="home.html">Home</a></li>
+            <li class="nav-item"><a href="about.html">About</a></li>
+            <li class="nav-item"><a href="menu.html">Menu</a></li>
+            <li class="nav-item"><a href="contact.html">Contact</a></li>
+            <li class="nav-item"><a href="feedback.html">Feedback</a></li>
+            <li class="nav-item"><a href="profile.html">Profile</a></li>
+            <li class="nav-item"><a onclick="logout(event)" href="#">Log Out</a></li>
+
+
+          </ul>
+        </nav>
+
+
+      </div>
+    </div>
+  </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Hero Section -->
+      <div class="hero">
+        <img 
+          src="https://codia-f2c.s3.us-west-1.amazonaws.com/image/2025-04-20/vUUgArAf6w.png" 
+          alt="Canteen Dining Area" 
+          loading="lazy"
+        />
+        <div class="hero-text">
+          <h2>About Smart Canteen</h2>
+          <p>Discover how we’re transforming campus dining with convenience and efficiency.</p>
+        </div>
+      </div>
+
+      <!-- Introduction Section -->
+      <div class="section">
+        <h2>Revolutionizing Campus Dining with Smart Reservations!</h2>
+        <p>
+          Our canteen reservation system is designed to make campus dining
+          hassle-free. Skip long queues, pre-order your meals, and enjoy a
+          stress-free lunchtime.
+        </p>
+      </div>
+
+      <!-- Vision Section -->
+      <div class="section">
+        <h2>Vision</h2>
+        <p>
+          To revolutionize campus dining by providing a seamless, efficient, and
+          sustainable meal reservation system that enhances the student experience
+          and promotes a smarter way to dine.
+        </p>
+      </div>
+
+      <!-- Mission Section -->
+      <div class="section">
+        <h2>Mission</h2>
+        <ul style="list-style: none; padding: 0">
+          <li>
+            <strong>Ensuring Convenience:</strong> Easy pre-ordering and no long
+            queues.
+          </li>
+          <li>
+            <strong>Enhancing Efficiency:</strong> Fast service and better time
+            management.
+          </li>
+          <li>
+            <strong>Ensuring Accessibility:</strong> Intuitive platform for all
+            users.
+          </li>
+        </ul>
+      </div>
+    </main>
+
+    <!-- Footer (Copied from Home Page) -->
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-column">
+            <h3 class="footer-heading">Quick Links</h3>
+            <ul class="footer-links">
+              <li class="footer-link"><a href="/Html/home.html">Home</a></li>
+              <li class="footer-link"><a href="/menu1/2.html">Menu</a></li>
+              <li class="footer-link"><a href="/about us/about.html">About</a></li>
+              <li class="footer-link"><a href="/contact us/contact.html">Contact</a></li>
+              <li class="footer-link"><a href="feedback.html">Feedback</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer-column">
+            <h3 class="footer-heading">Explore More</h3>
+            <ul class="footer-links">
+              <li class="footer-link"><a href="#">Locations</a></li>
+              <li class="footer-link"><a href="#">Careers</a></li>
+              <li class="footer-link"><a href="#">Events</a></li>
+              <li class="footer-link"><a href="#">FAQs</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer-column">
+            <h3 class="footer-heading">Stay Connected</h3>
+            <ul class="footer-links">
+              <li class="footer-link"><a href="https://facebook.com/smartcanteen">Facebook</a></li>
+              <li class="footer-link"><a href="https://instagram.com/smartcanteen">Instagram</a></li>
+              <li class="footer-link"><a href="https://twitter.com/smartcanteen">Twitter</a></li>
+              <li class="footer-link"><a href="https://youtube.com/smartcanteen">YouTube</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Feedback</title>
+  <!-- <link rel="stylesheet" href="feedback.css" /> -->
+  <style>
+    :root {
+      --default-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        Ubuntu, "Helvetica Neue", Helvetica, Arial, "PingFang SC",
+        "Hiragino Sans GB", "Microsoft Yahei UI", "Microsoft Yahei",
+        "Source Han Sans CN", sans-serif;
+      --primary-color: #6a93ba;
+      --secondary-color: #a8d3f9;
+      --accent-color: #72c172;
+      --text-color: #000000;
+      --text-light: #ffffff;
+      --text-muted: #787575;
+    }
+
+    /* Reset and global styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Inter, var(--default-font-family);
+      line-height: 1.5;
+      color: var(--text-color);
+      overflow-x: hidden;
+    }
+
+    input,
+    select,
+    textarea,
+    button {
+      outline: 0;
+    }
+
+    /* Container styles */
+    .container {
+      width: 100%;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Header styles */
+    .site-header {
+      position: relative;
+      width: 100%;
+      height: 60px;
+      background: url(https://codia-f2c.s3.us-west-1.amazonaws.com/image/2025-04-20/aVNzgdkbpg.png) no-repeat center;
+      background-size: cover;
+      z-index: 10;
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 100%;
+      padding: 0 50px;
+    }
+
+    .logo {
+      width: 50px;
+      height: 50px;
+      background: url(https://codia-f2c.s3.us-west-1.amazonaws.com/image/2025-04-20/Otu7tsSTg1.png) no-repeat center;
+      background-size: cover;
+    }
+
+    .main-nav {
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-list {
+      display: flex;
+      gap: 30px;
+      list-style: none;
+    }
+
+    .nav-item a {
+      color: var(--text-light);
+      font-size: 18px;
+      font-weight: 400;
+      text-decoration: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .nav-item a:hover {
+      opacity: 0.8;
+    }
+
+    /* Main content */
+    .main-content {
+      flex: 1;
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .main-content h1 {
+      margin-bottom: 30px;
+      color: #333;
+    }
+
+    .feedback-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      text-align: left;
+    }
+
+    .feedback-form label {
+      font-weight: bold;
+    }
+
+    .feedback-form input,
+    .feedback-form textarea {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .feedback-form textarea {
+      border: 2px solid #3498db;
+    }
+
+    .feedback-form button {
+      align-self: center;
+      background-color: #6a94ba;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    #responseMessage {
+      text-align: center;
+      margin-top: 10px;
+      font-weight: bold;
+      color: green;
+    }
+
+    /* Footer */
+    .site-footer {
+      background-color: var(--primary-color);
+      color: var(--text-light);
+      padding: 80px 0 40px;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-column {
+      flex: 1;
+    }
+
+    .footer-heading {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .footer-link {
+      margin-bottom: 15px;
+    }
+
+    .footer-link a {
+      color: var(--text-light);
+      text-decoration: none;
+      font-size: 16px;
+      transition: opacity 0.3s ease;
+    }
+
+    .footer-link a:hover {
+      opacity: 0.8;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .nav-right {
+        flex-direction: column;
+        align-items: flex-end;
+      }
+
+      .icon {
+        margin-top: 5px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header Section -->
+  <header class="site-header">
+    <div class="header-content">
+      <div class="logo" aria-label="Smart Canteen Logo"></div>
+
+      <div class="main-nav">
+        <nav>
+          <ul class="nav-list">
+            <li class="nav-item"><a href="home.html">Home</a></li>
+            <li class="nav-item"><a href="about.html">About</a></li>
+            <li class="nav-item"><a href="menu.html">Menu</a></li>
+            <li class="nav-item"><a href="contact.html">Contact</a></li>
+            <li class="nav-item"><a href="feedback.html">Feedback</a></li>
+            <li class="nav-item"><a href="profile.html">Profile</a></li>
+            <li class="nav-item"><a onclick="logout(event)" href="#">Log Out</a></li>
+
+
+          </ul>
+        </nav>
+
+
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <h1>Your Feedback Matters</h1>
+
+    <h2>Submit Anonymous Feedback</h2>
+
+    <form id="feedbackForm">
+      <label for="rating">Rating (1 to 10):</label><br>
+      <input type="range" id="rating" name="rating" min="1" max="10" value="5"
+        oninput="ratingValue.innerText = this.value">
+      <span id="ratingValue">5</span><br><br>
+
+      <label for="message">Your Feedback:</label><br>
+      <textarea id="message" name="message" rows="5" cols="40" placeholder="Write your feedback here..."
+        required></textarea><br><br>
+
+      <button type="submit">Submit</button>
+    </form>
+
+    <p id="responseMessage" style="margin-top: 20px; font-weight: bold;"></p>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-column">
+          <h3 class="footer-heading">Quick Links</h3>
+          <ul class="footer-links">
+            <li class="footer-link"><a href="home.html">Home</a></li>
+            <li class="footer-link"><a href="menu.html">Menu</a></li>
+            <li class="footer-link"><a href="about.html">About</a></li>
+            <li class="footer-link"><a href="contact.html">Contact</a></li>
+            <li class="footer-link"><a href="feedback.html">Feedback</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h3 class="footer-heading">Explore More</h3>
+          <ul class="footer-links">
+            <li class="footer-link"><a href="#">Locations</a></li>
+            <li class="footer-link"><a href="#">Careers</a></li>
+            <li class="footer-link"><a href="#">Events</a></li>
+            <li class="footer-link"><a href="#">FAQs</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h3 class="footer-heading">Stay Connected</h3>
+          <ul class="footer-links">
+            <li class="footer-link"><a href="#">Facebook</a></li>
+            <li class="footer-link"><a href="#">Instagram</a></li>
+            <li class="footer-link"><a href="#">Twitter</a></li>
+            <li class="footer-link"><a href="#">YouTube</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('feedbackForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const rating = parseInt(document.getElementById('rating').value);
+      const message = document.getElementById('message').value.trim();
+
+      if (!message || rating < 1 || rating > 10) {
+        document.getElementById('responseMessage').innerText = 'Please enter a valid message and rating.';
+        return;
+      }
+
+      try {
+        const response = await fetch('http://localhost:3000/feedback', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ message, rating })
+        });
+
+        const result = await response.json();
+        document.getElementById('responseMessage').innerText = result.message;
+
+        // Clear form after successful submit
+        if (response.ok) {
+          document.getElementById('feedbackForm').reset();
+          document.getElementById('ratingValue').innerText = "5"; // Reset rating display
+          alert("Feedback send 😘")
+        }
+      } catch (err) {
+        console.error('Submission error:', err);
+        document.getElementById('responseMessage').innerText = 'Something went wrong. Try again later.';
+      }
+    });
+  </script>
+
+  <style>
+
+    textarea {
+      width: 100%;
+      resize: vertical;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #2c3e50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #34495e;
+    }
+  </style>
+</body>
+
+</html>

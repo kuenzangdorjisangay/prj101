@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Manager</title>
+    <link rel="stylesheet" href="dashboard.css" />
+
+    <style>
+        /* Container for feedback list */
+        .feedback-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            max-width: 700px;
+            margin: 1rem auto 2rem;
+            padding: 0 1rem;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+        }
+
+        /* Individual feedback card */
+        .feedback-card {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 1.5rem 1.75rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid #007bff;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .feedback-card:hover {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Rating styling */
+        .feedback-card p strong {
+            color: #007bff;
+        }
+
+        /* Message paragraph */
+        .feedback-card p {
+            margin: 0.4rem 0;
+            font-size: 1rem;
+            line-height: 1.4;
+        }
+
+        /* Date styling */
+        .feedback-card .date {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 0.8rem;
+            text-align: right;
+            font-style: italic;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="https://codia-f2c.s3.us-west-1.amazonaws.com/image/2025-04-20/Otu7tsSTg1.png" alt="Logo">
+            </div>
+            <nav>
+                <ul>
+                    <li class="active"><a href="adminDashboard.html">Dashboard</a></li>
+                    <li><a href="adminOrderList.html">Order List</a></li>
+                    <li><a href="adminOrderHistory.html">History</a></li>
+                    <li><a href="adminFeedback.html">Feedback</a></li>
+                    <li><a href="adminUser.html">Users</a></li>
+                    <li><a onclick="logout(event)" href="#">logout</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="container">
+                <h2>All Feedback</h2>
+                <div id="feedbackList" class="feedback-list"></div>
+            </div>
+        </main>
+    </div>
+
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', fetchFeedbacks);
+
+        async function fetchFeedbacks() {
+            try {
+                const response = await fetch('http://localhost:3000/feedback');
+                const feedbacks = await response.json();
+
+                const list = document.getElementById('feedbackList');
+                list.innerHTML = ''; // Clear previous content
+
+                if (feedbacks.length === 0) {
+                    list.innerHTML = '<p>No feedbacks submitted yet.</p>';
+                    return;
+                }
+
+                feedbacks.forEach(item => {
+                    const card = document.createElement('div');
+                    card.classList.add('feedback-card');
+
+                    const date = new Date(item.createdAt).toLocaleString();
+
+                    card.innerHTML = `
+            <p><strong>Rating:</strong> ${item.rating}/10</p>
+            <p><strong>Message:</strong> ${item.message}</p>
+            <p class="date">${date}</p>
+          `;
+
+                    list.appendChild(card);
+                });
+            } catch (err) {
+                console.error('Error fetching feedbacks:', err);
+                document.getElementById('feedbackList').innerHTML = '<p>Error loading feedbacks.</p>';
+            }
+        }
+    </script>
+
+</body>

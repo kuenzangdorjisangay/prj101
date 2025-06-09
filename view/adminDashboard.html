@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Manager</title>
+  <link rel="stylesheet" href="dashboard.css" />
+
+</head>
+<body>
+
+  <div class="container">
+    <aside class="sidebar">
+      <div class="logo">
+        <img src="https://codia-f2c.s3.us-west-1.amazonaws.com/image/2025-04-20/Otu7tsSTg1.png" alt="Logo">
+      </div>
+      <nav>
+        <ul>
+          <li class="active"><a href="adminDashboard.html">Dashboard</a></li>
+          <li><a href="adminOrderList.html">Order List</a></li>
+          <li><a href="adminOrderHistory.html">History</a></li>
+          <li><a href="adminFeedback.html">Feedback</a></li>
+          <li><a href="adminUser.html">Users</a></li>
+          <li><a onclick="logout(event)" href="#">logout</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <section class="overview">
+        <h2>Overview</h2>
+        <div class="stats">
+          <div class="stat-box" id="totalUsers">Loading...<span>Total Users</span></div>
+          <button class="btn" onclick="toggleForm()">Add Product</button>
+        </div>
+      </section>
+
+
+      <div class="form-container" id="productForm">
+        <input type="text" id="productName" placeholder="Product Name" required>
+        <input type="number" id="productPrice" placeholder="Product Price" required>
+        <textarea id="productDescription" placeholder="Product Description" required></textarea>
+        <input type="url" id="productImage" placeholder="Product Image URL" required>
+        <button class="btn" onclick="addProduct()">Submit</button>
+      </div>
+      <div class="products-display" id="productsDisplay"></div>
+
+      <section class="review">
+        <h3>Latest Review</h3>
+        <ul>
+
+          <li>It really helps avoid long queues during peak hours.</li>
+          <li>Makes the whole canteen experience more organized and smooth.</li>
+          <li>Food is always ready on time.</li>
+
+          <!-- Top of body -->
+          <!-- <button id="logoutBtn" class="logout-button">Logout</button> -->
+
+          <!-- At the bottom of the file -->
+          <!-- <script>
+            document.getElementById("logoutBtn").addEventListener("click", function () {
+              window.location.href = "../Login/login.html"; // Adjust if path differs
+            });
+          </script> -->
+
+
+
+
+        </ul>
+      </section>
+    </main>
+  </div>
+
+
+
+  <script>
+    const API_URL = "http://localhost:3000/api/products";
+
+    const nameInput = document.getElementById('productName');
+    const priceInput = document.getElementById('productPrice');
+    const descInput = document.getElementById('productDescription');
+    const imageInput = document.getElementById('productImage');
+    const productsDisplay = document.getElementById('productsDisplay');
+
+    function toggleForm() {
+      const form = document.getElementById('productForm');
+      form.style.display = form.style.display === 'none' || form.style.display === '' ? 'block' : 'none';
+    }
+
+    async function loadProducts() {
+      productsDisplay.innerHTML = "Loading...";
+      try {
+        const res = await fetch(`${API_URL}/get`);
+        const data = await res.json();
+        if (data.success) {
+          renderProducts(data.data);
+        } else {
+          productsDisplay.innerHTML = "Failed to load products.";
+        }
+      } catch (err) {
+        productsDisplay.innerHTML = "Error fetching products.";
+        console.error(err);
+      }
+    }
+
+    function renderProducts(products) {
+      productsDisplay.innerHTML = '';
+      products.forEach(product => {
+        const div = document.createElement('div');
+        div.className = 'product';
+
+        div.innerHTML = `
+            <img src="${product.image}" alt="${product.name}" />
+            <h3>${product.name}</h3>
+            <p><strong>Price:</strong> Nu.${product.price}</p>
+            <p>${product.description}</p>
+            <div class="actions">
+                <button class="edit-btn" onclick="editProduct('${product._id}', this)">Edit</button>
+                <button class="delete-btn" onclick="deleteProduct('${product._id}')">Delete</button>
+            </div>
+        `;
+
+        productsDisplay.appendChild(div);
+      });
+    }
+
+    async function addProduct() {
+      const newProduct = {
+        name: nameInput.value.trim(),
+        price: parseFloat(priceInput.value),
+        description: descInput.value.trim(),
+        image: imageInput.value.trim()
+      };
+
+      if (!newProduct.name || !newProduct.price || !newProduct.image) {
+        alert("Please fill in all required fields.");
+        return;
+      }
+
+      try {
+        const res = await fetch(`${API_URL}/add`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(newProduct)
+        });
+        const data = await res.json();
+        if (data.success) {
+          nameInput.value = '';
+          priceInput.value = '';
+          descInput.value = '';
+          imageInput.value = '';
+          toggleForm();
+          loadProducts();
+        } else {
+          alert("Failed to add product.");
+        }
+      } catch (err) {
+        alert("Server error.");
+        console.error(err);
+      }
+    }
+
+    function editProduct(productId, button) {
+      const productDiv = button.closest('.product');
+      const name = productDiv.querySelector('h3').textContent;
+      const price = productDiv.querySelector('p').textContent.match(/\d+(\.\d+)?/)[0];
+      const desc = productDiv.querySelectorAll('p')[1].textContent;
+      const img = productDiv.querySelector('img').src;
+
+      productDiv.innerHTML = `
+        <input type="text" class="edit-name" value="${name}" />
+        <input type="number" class="edit-price" value="${price}" />
+        <textarea class="edit-description">${desc}</textarea>
+        <input type="text" class="edit-image" value="${img}" />
+        <div class="actions">
+            <button class="btn save-btn" onclick="saveEdit('${productId}', this)">Save</button>
+            <button class="btn delete-btn" onclick="loadProducts()">Cancel</button>
+        </div>
+    `;
+    }
+
+    async function saveEdit(productId, button) {
+      const productDiv = button.closest('.product');
+      const updatedProduct = {
+        name: productDiv.querySelector('.edit-name').value.trim(),
+        price: parseFloat(productDiv.querySelector('.edit-price').value),
+        description: productDiv.querySelector('.edit-description').value.trim(),
+        image: productDiv.querySelector('.edit-image').value.trim()
+      };
+
+      if (!updatedProduct.name || !updatedProduct.price || !updatedProduct.image) {
+        alert("Please fill in all required fields.");
+        return;
+      }
+
+      try {
+        const res = await fetch(`${API_URL}/update/${productId}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(updatedProduct)
+        });
+        const data = await res.json();
+        if (data.success) {
+          loadProducts();
+        } else {
+          alert("Failed to update product.");
+        }
+      } catch (err) {
+        alert("Server error.");
+        console.error(err);
+      }
+    }
+
+    async function deleteProduct(productId) {
+      if (!confirm("Are you sure you want to delete this product?")) return;
+
+      try {
+        const res = await fetch(`${API_URL}/delete/${productId}`, {
+          method: "DELETE"
+        });
+        const data = await res.json();
+        if (data.success) {
+          loadProducts();
+        } else {
+          alert("Failed to delete product.");
+        }
+      } catch (err) {
+        alert("Server error.");
+        console.error(err);
+      }
+    }
+
+    loadProducts();
+
+    //logout
+    const logout = function (event) {
+      event.preventDefault(); // Prevent link navigation
+
+      // Clear localStorage (optional if you're not using it)
+      localStorage.removeItem('token');
+
+      // Call backend to clear cookie
+      fetch('/api/auth/logout', {
+        method: 'POST',
+        credentials: 'include'
+      })
+        .then(res => res.json())
+        .then(data => {
+          alert(data.message || 'Logged out successfully');
+          window.location.href = 'login.html';
+        })
+        .catch(err => {
+          console.error('Logout error:', err);
+          alert('Logout failed. Please try again.');
+        });
+    };
+
+
+
+    //get total users 
+    async function loadUserCount() {
+      try {
+        const res = await fetch('http://localhost:3000/api/users/count');
+        const data = await res.json();
+
+        if (data.success) {
+          document.getElementById('totalUsers').innerHTML = `${data.count}<span>Total Users</span>`;
+        } else {
+          document.getElementById('totalUsers').innerHTML = `N/A<span>Total Users</span>`;
+        }
+      } catch (error) {
+        console.error('Error fetching user count:', error);
+        document.getElementById('totalUsers').innerHTML = `Error<span>Total Users</span>`;
+      }
+    }
+    loadProducts();
+    loadUserCount();
+
+
+
+  </script>
+
+</body>
