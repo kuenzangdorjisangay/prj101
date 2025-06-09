@@ -139,85 +139,150 @@
   .hero {
     position: relative;
     width: 100%;
-    height: 800px;
+    min-height: 600px;
     background: url(https://codia-f2c.s3.us-west-1.amazonaws.com/image/2025-04-20/vUUgArAf6w.png) no-repeat center;
     background-size: cover;
     color: var(--text-light);
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 0 50px;
+    align-items: center;
+    padding: 0 20px;
+  }
+
+  .hero-content-box {
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 60px 24px 48px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    background: rgba(0, 0, 0, 0.10);
+    border-radius: 24px;
+    box-shadow: 0 6px 32px 0 rgba(31, 38, 135, 0.10);
   }
 
   .hero-title {
-    display: flex;
-    /* Activate Flexbox */
-    flex-direction: column;
-    /* Stack elements vertically */
-    justify-content: center;
-    /* Center vertically */
-    align-items: center;
-    /* Center horizontally */
-    text-align: center;
-    /* Center the text */
-    height: 30vh;
-    /* Full viewport height */
-    font-size: 40px;
+    font-family: 'Lexend', 'Inter', Arial, sans-serif;
+    font-size: 3.2rem;
+    font-weight: 800;
+    margin-bottom: 0.2em;
+    line-height: 1.1;
+    letter-spacing: 1px;
+    color: #fff;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+  }
 
+  .hero-main {
+    color: #fff;
+    display: block;
+  }
+
+  .hero-sub {
+    color: #72c172;
+    font-size: 2rem;
+    font-weight: 600;
+    display: block;
+    margin-top: 6px;
+    letter-spacing: 0.5px;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.10);
   }
 
   .hero-description {
-    display: flex;
-    /* Activate Flexbox */
-    flex-direction: column;
-    /* Stack elements vertically */
-    justify-content: center;
-    /* Center vertically */
-    align-items: center;
-    /* Center horizontally */
-    text-align: center;
-    /* Center the text */
-    height: 30vh;
-    /* Full viewport height */
-    font-size: 20px;
+    font-size: 1.25rem;
+    color: #eaf4fb;
+    font-weight: 500;
+    margin-bottom: 0.2em;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.10);
+  }
 
+  .hero-lead {
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.1em;
+  }
 
+  .hero-highlight {
+    color: #a8d3f9;
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin: 0.5em 0 0.2em 0;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.10);
+  }
+
+  .hero-tagline {
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 0.5em;
+    letter-spacing: 0.5px;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.10);
   }
 
   .hero-buttons {
     display: flex;
     gap: 30px;
     justify-content: center;
+    margin-top: 18px;
   }
 
-  .btn {
-    display: inline-block;
-    padding: 15px 40px;
-    border-radius: 50px;
-    font-size: 20px;
-    font-weight: 500;
+  .hero-cta {
+    font-size: 1.2rem;
+    font-weight: 700;
+    padding: 18px 48px;
+    border-radius: 40px;
+    background: linear-gradient(90deg, #6a93ba 0%, #72c172 100%);
+    color: #fff !important;
+    box-shadow: 0 4px 16px 0 rgba(106, 147, 186, 0.18);
+    border: none;
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    letter-spacing: 0.5px;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.10);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none !important;
+  }
+
+  .hero-cta:hover {
+    background: linear-gradient(90deg, #72c172 0%, #6a93ba 100%);
+    color: #fff;
+    transform: translateY(-2px) scale(1.04);
+    box-shadow: 0 8px 24px 0 rgba(106, 147, 186, 0.22);
     text-decoration: none;
-    text-align: center;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
   }
 
-  .btn-primary {
-    background-color: var(--secondary-color);
-    color: var(--text-light);
+  .hero-cta:visited {
+    text-decoration: none !important;
   }
 
-  .btn-primary:hover {
-    background-color: #8fc1f5;
+  .hero-cta:focus {
+    outline: 2px solid #a8d3f9;
+    text-decoration: none !important;
   }
 
-  .btn-secondary {
-    background-color: var(--accent-color);
-    color: var(--text-light);
-  }
+  @media (max-width: 900px) {
+    .hero-content-box {
+      padding: 32px 8px 32px 8px;
+      max-width: 98vw;
+    }
 
-  .btn-secondary:hover {
-    background-color: #5eae5e;
+    .hero-title {
+      font-size: 2rem;
+    }
+
+    .hero-description,
+    .hero-highlight,
+    .hero-tagline {
+      font-size: 1rem;
+    }
+
+    .hero-cta {
+      font-size: 1rem;
+      padding: 14px 24px;
+    }
   }
 
   /* Specials section */
@@ -294,12 +359,22 @@
     margin-bottom: 60px;
   }
 
-  .features-icons {
+  .features-grid {
     display: flex;
     justify-content: space-around;
-    margin-bottom: 50px;
+    align-items: flex-start;
+    gap: 40px;
     max-width: 1200px;
     margin: 0 auto 50px;
+  }
+
+  .feature {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 20px;
   }
 
   .feature-icon {
@@ -310,6 +385,7 @@
     align-items: center;
     justify-content: center;
     margin-bottom: 30px;
+    background-color: #eaf4fb;
   }
 
   .time-icon {
@@ -317,24 +393,14 @@
     background-size: cover;
   }
 
-
+  .seat-icon {
+    background: url('https://codia-f2c.s3.us-west-1.amazonaws.com/image/2025-04-20/1QwQn6Qn7A.png') no-repeat center;
+    background-size: cover;
+  }
 
   .payment-icon {
     background: url(https://codia-f2c.s3.us-west-1.amazonaws.com/image/2025-04-20/X6RHHn27U4.png) no-repeat center;
     background-size: cover;
-  }
-
-  .features-grid {
-    display: flex;
-    justify-content: space-between;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .feature {
-    flex: 1;
-    padding: 0 20px;
-    text-align: center;
   }
 
   .feature-title {
@@ -367,6 +433,42 @@
     max-width: 800px;
     margin: 0 auto 50px;
     line-height: 1.5;
+  }
+
+  .cta-btn {
+    font-size: 1.2rem;
+    font-weight: 700;
+    padding: 18px 48px;
+    border-radius: 40px;
+    background: linear-gradient(90deg, #72c172 0%, #6a93ba 100%);
+    color: #fff !important;
+    box-shadow: 0 4px 16px 0 rgba(106, 147, 186, 0.18);
+    border: none;
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    letter-spacing: 0.5px;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.10);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none !important;
+    margin-top: 18px;
+  }
+
+  .cta-btn:hover {
+    background: linear-gradient(90deg, #6a93ba 0%, #72c172 100%);
+    color: #fff;
+    transform: translateY(-2px) scale(1.04);
+    box-shadow: 0 8px 24px 0 rgba(106, 147, 186, 0.22);
+    text-decoration: none;
+  }
+
+  .cta-btn:visited {
+    text-decoration: none !important;
+  }
+
+  .cta-btn:focus {
+    outline: 2px solid #a8d3f9;
+    text-decoration: none !important;
   }
 
   /* Footer */
@@ -446,17 +548,154 @@
   <main>
     <!-- Hero Section -->
     <section class="hero">
-      <h1 class="hero-title">Smart Canteen: Hassle-Free College Dining</h1>
-      <p class="hero-description">
-        Revolutionize your campus dining experience with our seamless canteen reservation system.
-        Skip the long queues, pre-order your favorite meals, and enjoy a stress-free lunchtime.
-        Designed for convenience, efficiency, and a better student life!
-      </p>
-      <div class="hero-buttons">
-
-        <a href="menu.html" class="btn btn-secondary">View Menu</a>
+      <div class="hero-content-box">
+        <h1 class="hero-title">
+          <span class="hero-main">Smart Canteen</span>
+          <span class="hero-sub">Hassle-Free College Dining</span>
+        </h1>
+        <p class="hero-description">
+          <span class="hero-lead">Revolutionize your campus dining experience</span> with our seamless canteen reservation system.
+        </p>
+        <p class="hero-highlight">
+          Skip the long queues, pre-order your favorite meals, and enjoy a stress-free lunchtime.
+        </p>
+        <p class="hero-tagline">
+          Designed for <b>convenience</b>, <b>efficiency</b>, and a better student life!
+        </p>
+        <div class="hero-buttons">
+          <a href="menu.html" class="btn btn-secondary hero-cta" role="button">🍽️ View Menu</a>
+        </div>
       </div>
     </section>
+    <style>
+      .hero-content-box {
+        max-width: 700px;
+        margin: 0 auto;
+        text-align: center;
+        padding: 60px 24px 48px 24px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 18px;
+        background: rgba(0, 0, 0, 0.10);
+        border-radius: 24px;
+        box-shadow: 0 6px 32px 0 rgba(31, 38, 135, 0.10);
+      }
+
+      .hero-title {
+        font-family: 'Lexend', 'Inter', Arial, sans-serif;
+        font-size: 3.2rem;
+        font-weight: 800;
+        margin-bottom: 0.2em;
+        line-height: 1.1;
+        letter-spacing: 1px;
+        color: #fff;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+      }
+
+      .hero-main {
+        color: #fff;
+        display: block;
+      }
+
+      .hero-sub {
+        color: #72c172;
+        font-size: 2rem;
+        font-weight: 600;
+        display: block;
+        margin-top: 6px;
+        letter-spacing: 0.5px;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.10);
+      }
+
+      .hero-description {
+        font-size: 1.25rem;
+        color: #eaf4fb;
+        font-weight: 500;
+        margin-bottom: 0.2em;
+        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.10);
+      }
+
+      .hero-lead {
+        color: #fff;
+        font-weight: 700;
+        font-size: 1.1em;
+      }
+
+      .hero-highlight {
+        color: #a8d3f9;
+        font-size: 1.15rem;
+        font-weight: 600;
+        margin: 0.5em 0 0.2em 0;
+        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.10);
+      }
+
+      .hero-tagline {
+        color: #fff;
+        font-size: 1.1rem;
+        font-weight: 500;
+        margin-bottom: 0.5em;
+        letter-spacing: 0.5px;
+        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.10);
+      }
+
+      .hero-cta {
+        font-size: 1.2rem;
+        font-weight: 700;
+        padding: 18px 48px;
+        border-radius: 40px;
+        background: linear-gradient(90deg, #6a93ba 0%, #72c172 100%);
+        color: #fff !important;
+        box-shadow: 0 4px 16px 0 rgba(106, 147, 186, 0.18);
+        border: none;
+        transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+        letter-spacing: 0.5px;
+        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.10);
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none !important;
+      }
+
+      .hero-cta:hover {
+        background: linear-gradient(90deg, #72c172 0%, #6a93ba 100%);
+        color: #fff;
+        transform: translateY(-2px) scale(1.04);
+        box-shadow: 0 8px 24px 0 rgba(106, 147, 186, 0.22);
+        text-decoration: none;
+      }
+
+      .hero-cta:visited {
+        text-decoration: none !important;
+      }
+
+      .hero-cta:focus {
+        outline: 2px solid #a8d3f9;
+        text-decoration: none !important;
+      }
+
+      @media (max-width: 900px) {
+        .hero-content-box {
+          padding: 32px 8px 32px 8px;
+          max-width: 98vw;
+        }
+
+        .hero-title {
+          font-size: 2rem;
+        }
+
+        .hero-description,
+        .hero-highlight,
+        .hero-tagline {
+          font-size: 1rem;
+        }
+
+        .hero-cta {
+          font-size: 1rem;
+          padding: 14px 24px;
+        }
+      }
+    </style>
 
     <!-- Today's Specials Section -->
     <section class="specials-section">
@@ -511,23 +750,16 @@
       <div class="container">
         <h2 class="features-heading">Why Choose Smart Canteen?</h2>
 
-        <div class="features-icons">
-          <div class="feature-icon time-icon" aria-label="Save Time Icon"></div>
-          <div class="feature-icon seat-icon-container">
-            <div class="seat-icon" aria-label="Reserve Seats Icon"></div>
-          </div>
-          <div class="feature-icon payment-icon" aria-label="Easy Payment Icon"></div>
-        </div>
-
         <div class="features-grid">
           <div class="feature">
+            <div class="feature-icon time-icon" aria-label="Save Time Icon"></div>
             <h3 class="feature-title">Save Time</h3>
             <p class="feature-description">
               Skip the long queues and pre-order your meals to pick up at your convenience.
             </p>
           </div>
-
           <div class="feature">
+            <div class="feature-icon payment-icon" aria-label="Easy Payment Icon"></div>
             <h3 class="feature-title">Easy Payment</h3>
             <p class="feature-description">
               Pay securely through uploading screenshot.
@@ -544,7 +776,7 @@
         <p class="cta-description">
           Join thousands of students who are already enjoying hassle-free meals with Smart Canteen.
         </p>
-        <a href="#" class="btn btn-primary">Get Started Today</a>
+        <a href="#" class="btn btn-primary cta-btn" role="button">🚀 Get Started Today</a>
       </div>
     </section>
   </main>

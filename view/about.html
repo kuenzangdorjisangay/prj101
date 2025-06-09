@@ -184,23 +184,107 @@
         font-size: 16px;
       }
 
-      /* Sections */
-      .section {
-        padding: 40px 20px;
-        background: white;
+      /* About Section - Redesigned */
+      .about-intro {
+        background: linear-gradient(90deg, #eaf4fb 0%, #f9f9f9 100%);
+        border-radius: 18px;
+        box-shadow: 0 2px 16px 0 rgba(106, 147, 186, 0.08);
+        padding: 48px 24px 32px 24px;
+        margin: 40px auto 32px auto;
+        max-width: 900px;
         text-align: center;
       }
 
-      .section h2 {
-        margin-bottom: 10px;
-        font-size: 24px;
-        font-weight: 600;
+      .about-intro-title {
+        font-size: 2.2rem;
+        font-weight: 800;
+        color: #1a365d;
+        margin-bottom: 18px;
+        letter-spacing: 0.5px;
       }
 
-      .section p,
-      .section li {
-        font-size: 16px;
-        line-height: 1.5;
+      .about-highlight {
+        color: #6a93ba;
+        font-weight: 700;
+      }
+
+      .about-intro-desc {
+        font-size: 1.25rem;
+        color: #3a4a5a;
+        line-height: 1.7;
+      }
+
+      .about-vision-mission {
+        display: flex;
+        gap: 40px;
+        justify-content: center;
+        align-items: stretch;
+        margin: 0 auto 40px auto;
+        max-width: 1100px;
+        flex-wrap: wrap;
+      }
+
+      .about-vision, .about-mission {
+        background: #fff;
+        border-radius: 18px;
+        box-shadow: 0 2px 16px 0 rgba(106, 147, 186, 0.08);
+        flex: 1 1 340px;
+        min-width: 320px;
+        max-width: 500px;
+        padding: 36px 28px 32px 28px;
+        margin: 0 0 20px 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .about-icon-circle {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #a8d3f9 0%, #72c172 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 18px;
+        box-shadow: 0 2px 8px 0 rgba(106, 147, 186, 0.10);
+      }
+
+      .about-icon {
+        font-size: 2rem;
+        color: #fff;
+      }
+
+      .about-section-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #6a93ba;
+        margin-bottom: 12px;
+      }
+
+      .about-section-desc {
+        font-size: 1.1rem;
+        color: #3a4a5a;
+        margin-bottom: 0;
+      }
+
+      .about-mission-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        text-align: left;
+      }
+
+      .about-mission-list li {
+        font-size: 1.08rem;
+        color: #3a4a5a;
+        margin-bottom: 12px;
+        padding-left: 0;
+        position: relative;
+      }
+
+      .about-mission-list li b {
+        color: #72c172;
       }
 
       /* Footer */
@@ -289,6 +373,28 @@
         .footer-column {
           text-align: center;
         }
+
+        .about-intro {
+          padding: 36px 18px;
+        }
+
+        .about-intro-title {
+          font-size: 1.8rem;
+        }
+
+        .about-intro-desc {
+          font-size: 1rem;
+        }
+
+        .about-vision-mission {
+          flex-direction: column;
+          gap: 24px;
+          align-items: stretch;
+        }
+
+        .about-vision, .about-mission {
+          max-width: 100%;
+        }
       }
 
       @media (max-width: 480px) {
@@ -349,43 +455,37 @@
       </div>
 
       <!-- Introduction Section -->
-      <div class="section">
-        <h2>Revolutionizing Campus Dining with Smart Reservations!</h2>
-        <p>
-          Our canteen reservation system is designed to make campus dining
-          hassle-free. Skip long queues, pre-order your meals, and enjoy a
-          stress-free lunchtime.
+      <section class="about-intro">
+        <h2 class="about-intro-title">Revolutionizing Campus Dining with <span class="about-highlight">Smart Reservations!</span></h2>
+        <p class="about-intro-desc">
+          Our canteen reservation system is designed to make campus dining <b>hassle-free</b>.<br>
+          <span class="about-highlight">Skip long queues, pre-order your meals, and enjoy a stress-free lunchtime.</span>
         </p>
-      </div>
+      </section>
 
       <!-- Vision Section -->
-      <div class="section">
-        <h2>Vision</h2>
-        <p>
-          To revolutionize campus dining by providing a seamless, efficient, and
-          sustainable meal reservation system that enhances the student experience
-          and promotes a smarter way to dine.
-        </p>
-      </div>
-
-      <!-- Mission Section -->
-      <div class="section">
-        <h2>Mission</h2>
-        <ul style="list-style: none; padding: 0">
-          <li>
-            <strong>Ensuring Convenience:</strong> Easy pre-ordering and no long
-            queues.
-          </li>
-          <li>
-            <strong>Enhancing Efficiency:</strong> Fast service and better time
-            management.
-          </li>
-          <li>
-            <strong>Ensuring Accessibility:</strong> Intuitive platform for all
-            users.
-          </li>
-        </ul>
-      </div>
+      <section class="about-vision-mission">
+        <div class="about-vision">
+          <div class="about-icon-circle">
+            <span class="about-icon" aria-label="Vision">👁️</span>
+          </div>
+          <h2 class="about-section-title">Vision</h2>
+          <p class="about-section-desc">
+            To revolutionize campus dining by providing a seamless, efficient, and sustainable meal reservation system that enhances the student experience and promotes a smarter way to dine.
+          </p>
+        </div>
+        <div class="about-mission">
+          <div class="about-icon-circle">
+            <span class="about-icon" aria-label="Mission">🎯</span>
+          </div>
+          <h2 class="about-section-title">Mission</h2>
+          <ul class="about-mission-list">
+            <li><b>Ensuring Convenience:</b> Easy pre-ordering and no long queues.</li>
+            <li><b>Enhancing Efficiency:</b> Fast service and better time management.</li>
+            <li><b>Ensuring Accessibility:</b> Intuitive platform for all users.</li>
+          </ul>
+        </div>
+      </section>
     </main>
 
     <!-- Footer (Copied from Home Page) -->
