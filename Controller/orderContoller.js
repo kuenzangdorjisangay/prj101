@@ -38,6 +38,18 @@ router.post('/', authenticate, async (req, res) => {
   }
 });
 
+// GET /api/orders/total-income
+router.get('/total-income', authenticate, async (req, res) => {
+  try {
+    const result = await Order.aggregate([
+      { $group: { _id: null, total: { $sum: "$totalAmount" } } }
+    ]);
+    res.json({ success: true, total: result[0]?.total || 0 });
+  } catch (err) {
+    res.json({ success: false, message: 'Failed to fetch income' });
+  }
+});
+
 /**
  * Get all orders for a specific user
  * GET /api/orders/user/:userId
@@ -129,5 +141,9 @@ router.delete('/:orderId', authenticate, async (req, res) => {
   }
 });
 */
+
+
+
+
 
 module.exports = router;
