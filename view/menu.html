@@ -300,7 +300,43 @@
             text-decoration: none;
         }
 
-        @media (max-width: 768px) {
+        /* Toast styles */
+      .toast {
+        position: fixed;
+        top: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        min-width: 220px;
+        max-width: 350px;
+        background: linear-gradient(90deg, #a8d3f9 60%, #72c172 100%);
+        color: #fff;
+        font-size: 16px;
+        font-weight: 500;
+        padding: 16px 28px 16px 18px;
+        border-radius: 8px;
+        box-shadow: 0 4px 24px rgba(106,147,186,0.18);
+        z-index: 9999;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s, transform 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .toast.show {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateX(-50%) translateY(0);
+      }
+      .toast.success { background: linear-gradient(90deg, #72c172 60%, #43e97b 100%); }
+      .toast.error { background: linear-gradient(90deg, #e57373 60%, #ffb347 100%); }
+      .toast.warning { background: linear-gradient(90deg, #ffd600 60%, #ffb347 100%); color: #333; }
+      .toast.info { background: linear-gradient(90deg, #6a93ba 60%, #a8d3f9 100%); }
+      @media (max-width: 600px) {
+        .toast { right: unset; left: 50%; transform: translateX(-50%); min-width: unset; max-width: unset; }
+      }
+
+      @media (max-width: 768px) {
             .menu-grid {
                 grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             }
@@ -310,6 +346,62 @@
                 text-align: center;
             }
         }
+
+        /* Cart icon styles */
+      .cart-top {
+        position: relative;
+        top: 0;
+        right: 0;
+        margin: 32px 60px 18px 0; /* Increased top margin for more space below nav */
+        display: flex;
+        justify-content: flex-end;
+      }
+      .cart-icon {
+        position: relative;
+        background: #fff;
+        border-radius: 50%;
+        width: 44px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 8px rgba(106,147,186,0.10);
+        cursor: pointer;
+        transition: box-shadow 0.2s, background 0.2s;
+      }
+      .cart-icon:hover {
+        box-shadow: 0 4px 16px rgba(106,147,186,0.18);
+        background: #eaf6ff;
+      }
+      .cart-icon svg {
+        width: 26px;
+        height: 26px;
+        color: var(--accent-color);
+      }
+      .cart-badge {
+        position: absolute;
+        top: 4px;
+        right: 4px;
+        background: #72c172;
+        color: #fff;
+        font-size: 13px;
+        font-weight: bold;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.10);
+        border: 2px solid #fff;
+        pointer-events: none;
+      }
+      @media (max-width: 768px) {
+        .cart-top { right: 12px; top: 12px; }
+        .cart-icon { width: 36px; height: 36px; }
+        .cart-icon svg { width: 20px; height: 20px; }
+        .cart-badge { width: 16px; height: 16px; font-size: 11px; }
+      }
     </style>
 </head>
 
@@ -338,13 +430,20 @@
       </div>
     </div>
   </header>
+  <div class="cart-top" style="position:relative;top:0;right:0;margin:32px 60px 18px 0;display:flex;justify-content:flex-end;">
+    <div class="cart-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 9m5-9v9m4-9v9m1-13a1 1 0 11-2 0 1 1 0 012 0z"/></svg>
+      <span class="cart-badge" id="cartCounter">0</span>
+    </div>
+  </div>
+  <div id="toast" class="toast"><span class="toast-icon"></span><span class="toast-message"></span></div>
     <main class="main-content" id="menu-page">
         <h1>Our Menu</h1>
         <p class="subtitle">Explore our wide variety of delicious meals and snacks.</p>
         
         <div class="menu-grid" id="menuContainer"></div>
         <button class="done-btn" onclick="showInvoice()">Done</button>
-        <div class="cart-counter" id="cartCounter">0</div>
+        <div class="cart-counter" id="cartCounter" style="display:none">0</div>
     </main>
 
     <div class="invoice-page" id="invoicePage">
@@ -436,6 +535,7 @@
 
 
         function updateCartCounter() {
+            // Update both the badge and the hidden counter for compatibility
             document.getElementById('cartCounter').textContent = cartCount;
         }
         function parseJwt(token) {
@@ -457,7 +557,7 @@
             console.log('🔐 Token from localStorage:', token);
 
             if (!token) {
-                alert('⚠️ No token found. Please login first.');
+                showToast('No token found. Please login first.', 'warning');
                 return;
             }
 
@@ -465,12 +565,12 @@
             console.log('📦 Decoded token:', decoded);
 
             if (!decoded || !decoded.userId) {
-                alert('⚠️ Invalid or expired token. Please login again.');
+                showToast('Invalid or expired token. Please login again.', 'error');
                 return;
             }
 
             if (cart.length === 0) {
-                alert('🛒 Your cart is empty. Please add some items first.');
+                showToast('Your cart is empty. Please add some items first.', 'info');
                 return;
             }
 
@@ -526,15 +626,15 @@
                 .then(data => {
                     if (!data.success) {
                         console.error('❌ Order saving failed:', data.message);
-                        alert('Order saving failed: ' + data.message);
+                        showToast('Order saving failed: ' + data.message, 'error');
                     } else {
                         console.log('✅ Order saved successfully: ', data);
-                        alert('🎉 Order placed successfully! ');
+                        showToast('Order placed successfully!', 'success');
                     }
                 })
                 .catch(error => {
                     console.error('🚨 Network error while posting order:', error);
-                    alert('Network error. Failed to save order.');
+                    showToast('Network error. Failed to save order.', 'error');
                 });
         }
 
@@ -599,14 +699,32 @@
             })
                 .then(res => res.json())
                 .then(data => {
-                    alert(data.message || 'Logged out successfully');
+                    showToast(data.message || 'Logged out successfully', 'success');
                     window.location.href = 'login.html';
                 })
                 .catch(err => {
                     console.error('Logout error:', err);
-                    alert('Logout failed. Please try again.');
+                    showToast('Logout failed. Please try again.', 'error');
                 });
         };
+
+        function showToast(message, type = 'info') {
+      const toast = document.getElementById('toast');
+      const iconSpan = toast.querySelector('.toast-icon');
+      const msgSpan = toast.querySelector('.toast-message');
+      let icon = '';
+      if (type === 'success') icon = '✅';
+      else if (type === 'error') icon = '❌';
+      else if (type === 'info') icon = 'ℹ️';
+      else if (type === 'warning') icon = '⚠️';
+      iconSpan.textContent = icon;
+      msgSpan.textContent = message;
+      toast.className = 'toast show ' + type;
+      clearTimeout(window.toastTimeout);
+      window.toastTimeout = setTimeout(() => {
+        toast.className = 'toast ' + type;
+      }, 1800);
+    }
     </script>
 
 </body>
