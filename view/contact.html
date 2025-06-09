@@ -4,13 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Canteen - Contact Us</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap">
     <style>
         :root {
-            --default-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-                Ubuntu, "Helvetica Neue", Helvetica, Arial, "PingFang SC",
-                "Hiragino Sans GB", "Microsoft Yahei UI", "Microsoft Yahei",
-                "Source Han Sans CN", sans-serif;
+            --default-font-family: 'Poppins', 'Inter', 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
             --primary-color: #6a93ba;
             --secondary-color: #a8d3f9;
             --accent-color: #72c172;
@@ -27,7 +24,7 @@
         }
 
         body {
-            font-family: Inter, var(--default-font-family);
+            font-family: var(--default-font-family);
             line-height: 1.5;
             color: var(--text-color);
             overflow-x: hidden;
@@ -37,6 +34,7 @@
         select,
         textarea,
         button {
+            font-family: var(--default-font-family);
             outline: 0;
         }
 
@@ -202,15 +200,49 @@
             margin: 0 auto;
         }
 
-        .section h2 {
-            margin-bottom: 15px;
-            font-size: 1.8rem;
-            color: var(--primary-color);
+        .map-container {
+            margin: 0 auto;
+            margin-top: 20px;
+            max-width: 700px;
+            min-height: 320px;
+            background: linear-gradient(135deg, #e3f0fa 0%, #f8fafc 100%);
+            border-radius: 24px;
+            box-shadow: 0 6px 32px rgba(106, 147, 186, 0.13), 0 1.5px 8px rgba(106, 147, 186, 0.08);
+            border: 2px solid #a8d3f9;
+            padding: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: box-shadow 0.2s;
         }
-
-        .section p {
-            margin-bottom: 20px;
-            font-size: 1rem;
+        .map-container:hover {
+            box-shadow: 0 12px 48px rgba(106, 147, 186, 0.18), 0 2px 12px rgba(106, 147, 186, 0.12);
+        }
+        .map-container iframe {
+            width: 100%;
+            height: 380px;
+            border: none;
+            border-radius: 18px;
+            box-shadow: 0 2px 12px rgba(106, 147, 186, 0.10);
+            background: #fff;
+            min-height: 320px;
+        }
+        @media (max-width: 900px) {
+            .map-container {
+                max-width: 100%;
+                padding: 8px;
+            }
+            .map-container iframe {
+                height: 300px;
+            }
+        }
+        @media (max-width: 600px) {
+            .map-container {
+                padding: 2px;
+            }
+            .map-container iframe {
+                height: 220px;
+            }
         }
 
         /* Footer */
@@ -395,12 +427,9 @@
     <section class="section">
         <h2>Find Us</h2>
         <p>Here’s where you can find our campus canteen:</p>
-        <div style="margin-top: 20px;">
+        <div class="map-container">
             <iframe
                 src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14851.750156986396!2d89.64901123478228!3d27.527057482979426!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39e19566fa54c4df%3A0x82f8fd359c78d7f5!2sGyalpozhing%20College%20of%20Information%20Technology%20-%20Kabesa%20Campus!5e0!3m2!1sen!2sbt!4v1745354258844!5m2!1sen!2sbt"
-                width="600"
-                height="450"
-                style="border: 0"
                 allowfullscreen=""
                 loading="lazy"
                 referrerpolicy="no-referrer-when-downgrade"
@@ -445,5 +474,25 @@
             </div>
         </div>
     </footer>
+
+    <script>
+  // Logout function (copied from other pages for consistency)
+  function logout(event) {
+    event.preventDefault();
+    localStorage.removeItem('token');
+    fetch('/api/auth/logout', {
+      method: 'POST',
+      credentials: 'include'
+    })
+      .then(res => res.json())
+      .then(() => {
+        window.location.href = 'login.html';
+      })
+      .catch(err => {
+        console.error('Logout error:', err);
+        window.location.href = 'login.html';
+      });
+  }
+</script>
 </body>
 </html>
