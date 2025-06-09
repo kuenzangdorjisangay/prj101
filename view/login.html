@@ -93,6 +93,34 @@
     a:hover {
       text-decoration: underline;
     }
+
+    .toast {
+      visibility: hidden;
+      min-width: 220px;
+      background: #27ae60;
+      color: #fff;
+      text-align: center;
+      border-radius: 8px;
+      padding: 16px 24px;
+      position: fixed;
+      z-index: 9999;
+      left: 50%;
+      top: 40px;
+      font-size: 16px;
+      transform: translateX(-50%);
+      box-shadow: 0 4px 16px rgba(39, 174, 96, 0.18);
+      opacity: 0;
+      transition: opacity 0.4s, visibility 0.4s;
+    }
+
+    .toast.show {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .toast.error {
+      background: #e74c3c;
+    }
   </style>
 </head>
 
@@ -112,11 +140,13 @@
         <button type="submit">Confirm</button>
       </form>
 
-      <p>Need an account? <a href="signup.html">Sign Up</a></p>
+      <p>Need an account? <a href="register.html">Sign Up</a></p>
       <a href="find-account.html">Forgot your password?</a>
 
     </div>
   </div>
+
+  <div id="toast" class="toast"></div>
 
   <script>
     const emailInput = document.getElementById("email");
@@ -150,6 +180,21 @@
     emailInput.addEventListener("input", validateEmail);
     passwordInput.addEventListener("input", validatePassword);
 
+    function showToast(message, isError = false) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.className = 'toast' + (isError ? ' error' : '');
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2500);
+    }
+
+    document.querySelector('a[href="register.html"]').addEventListener('click', function(e) {
+      e.preventDefault();
+      window.location.href = 'register.html';
+    });
+
     document.getElementById("loginForm").addEventListener("submit", async function (event) {
       event.preventDefault();
 
@@ -161,7 +206,7 @@
           const response = await fetch('/api/auth/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            credentials: 'include', // important for sending/receiving cookies
+            credentials: 'include',
             body: JSON.stringify({
               email: emailInput.value.trim(),
               password: passwordInput.value.trim(),
@@ -171,29 +216,27 @@
           const data = await response.json();
 
           if (response.ok) {
-            // ✅ Save token from response body to localStorage
             if (data.token) {
               localStorage.setItem('token', data.token);
             } else {
               console.warn('No token received in response');
             }
-            alert(data.message);
-
-
-            // Role-based redirection
-            if (data.role === 'admin') {
-              window.location.href = 'adminDashboard.html';
-            } else if (data.role === 'user') {
-              window.location.href = 'home.html';
-            } else {
-              window.location.href = 'login.html'; // fallback
-            }
+            showToast(data.message);
+            setTimeout(() => {
+              if (data.role === 'admin') {
+                window.location.href = 'adminDashboard.html';
+              } else if (data.role === 'user') {
+                window.location.href = 'home.html';
+              } else {
+                window.location.href = 'login.html';
+              }
+            }, 1500);
           } else {
-            alert(data.message || 'Login failed');
+            showToast(data.message || 'Login failed', true);
           }
         } catch (error) {
           console.error('Error during login:', error);
-          alert('An error occurred. Please try again later.');
+          showToast('An error occurred. Please try again later.', true);
         }
       }
     });

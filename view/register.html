@@ -109,6 +109,34 @@
     a:hover {
       text-decoration: underline;
     }
+
+    .toast {
+      visibility: hidden;
+      min-width: 220px;
+      background: #27ae60;
+      color: #fff;
+      text-align: center;
+      border-radius: 8px;
+      padding: 16px 24px;
+      position: fixed;
+      z-index: 9999;
+      left: 50%;
+      top: 40px;
+      font-size: 16px;
+      transform: translateX(-50%);
+      box-shadow: 0 4px 16px rgba(39, 174, 96, 0.18);
+      opacity: 0;
+      transition: opacity 0.4s, visibility 0.4s;
+    }
+
+    .toast.show {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .toast.error {
+      background: #e74c3c;
+    }
   </style>
 </head>
 
@@ -142,7 +170,19 @@
     </div>
   </div>
 
+  <div id="toast" class="toast"></div>
+
   <script>
+    function showToast(message, isError = false) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.className = 'toast' + (isError ? ' error' : '');
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2500);
+    }
+
     document.getElementById("signupForm").addEventListener("submit", async function (event) {
       event.preventDefault();
 
@@ -207,13 +247,15 @@
         const data = await res.json();
 
         if (res.ok) {
-          alert("Signup successful!");
-          window.location.href = "/login";
+          showToast("Signup successful!");
+          setTimeout(() => {
+            window.location.href = "/login";
+          }, 1800);
         } else {
-          alert("Signup failed: " + data.message);
+          showToast("Signup failed: " + data.message, true);
         }
       } catch (err) {
-        alert("Server error: " + err.message);
+        showToast("Server error: " + err.message, true);
       }
     });
   </script>
