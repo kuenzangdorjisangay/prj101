@@ -26,7 +26,12 @@ const orderSchema = new mongoose.Schema({
     userName: {
         type: String,
         required: true
-    }
+    },
+    totalAmount: {
+  type: Number,
+  required: true
+}
+
 
 }, { timestamps: true });
 

@@ -8,26 +8,38 @@ const Order = require('../Model/orderModel');
  * POST /api/orders
  * Requires authentication
  */
+const Product = require('../Model/productModel'); // Make sure this is imported
+
 router.post('/', authenticate, async (req, res) => {
   try {
     const { items } = req.body;
-    const userId = req.user.userId; // Extracted from JWT token by authenticate middleware
-    console.log('userid', userId)
-    console.log('user name', req.user.name)
+    const userId = req.user.userId;
 
     if (!items || !Array.isArray(items) || items.length === 0) {
       return res.status(400).json({ success: false, message: 'Invalid order data: items required' });
     }
 
-    // Prepare order documents for insertion
-    const ordersToInsert = items.map(item => ({
-      user: userId,
-      userName: req.user.name,
-      product: item.productId,
-      quantity: item.quantity || 1,
-      status: 'Pending',
-      orderDate: new Date()
-    }));
+    const ordersToInsert = [];
+
+    for (const item of items) {
+      const product = await Product.findById(item.productId);
+      if (!product) {
+        return res.status(404).json({ success: false, message: 'Product not found' });
+      }
+
+      const quantity = item.quantity || 1;
+      const totalAmount = product.price * quantity;
+
+      ordersToInsert.push({
+        user: userId,
+        userName: req.user.name,
+        product: item.productId,
+        quantity,
+        status: 'Pending',
+        orderDate: new Date(),
+        totalAmount // ✅ now saved into the DB
+      });
+    }
 
     await Order.insertMany(ordersToInsert);
 
